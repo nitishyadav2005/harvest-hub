@@ -1,0 +1,1623 @@
+
+.equipment-page {
+    color: #153d2b;
+}
+
+.equipment-page .equipment-message,
+.equipment-page .equipment-success {
+    padding: 13px 16px;
+    margin-bottom: 18px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.equipment-page .equipment-message {
+    background: #fff1f0;
+    border: 1px solid #f0ceca;
+}
+
+.equipment-page .equipment-success {
+    color: #226337;
+    background: #e8f5e9;
+    border: 1px solid #c8dfcc;
+}
+
+.equipment-success button {
+    border: 0;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.equipment-form-section {
+    margin-bottom: 25px;
+}
+
+.equipment-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.equipment-form-grid label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    color: #315b3d;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.equipment-form-grid input,
+.equipment-form-grid select,
+.equipment-form-grid textarea {
+    width: 100%;
+    min-width: 0;
+    padding: 12px 13px;
+    border: 1px solid #d6e6da;
+    border-radius: 9px;
+    background: #fbfdfb;
+    color: #153d2b;
+    font: inherit;
+    font-weight: 400;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.equipment-form-grid input:focus,
+.equipment-form-grid select:focus,
+.equipment-form-grid textarea:focus {
+    border-color: #287a43;
+    box-shadow: 0 0 0 3px rgba(40, 122, 67, 0.1);
+}
+
+.equipment-full-width {
+    grid-column: 1 / -1;
+}
+
+.equipment-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.equipment-form-actions button:disabled {
+    opacity: 0.65;
+    cursor: wait;
+}
+
+.equipment-status,
+.equipment-record-count {
+    padding: 7px 10px;
+    border-radius: 8px;
+    background: #e5f4e8;
+    color: #226337;
+    border: 1px solid #c9e4cf;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.equipment-card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    background: linear-gradient(145deg, #ffffff, #f2f8f2);
+}
+
+.equipment-card .fc-details {
+    margin-bottom: 14px;
+}
+
+.equipment-notes {
+    padding: 12px;
+    margin: 0 0 16px;
+    border-radius: 9px;
+    background: #f2f8f2;
+    color: #617968;
+    font-size: 13px;
+    overflow-wrap: anywhere;
+}
+
+.equipment-card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-top: auto;
+}
+
+.equipment-card-actions .fc-button {
+    font-size: 12px;
+    padding: 10px 12px;
+}
+
+.equipment-delete {
+    border: 1px solid #f0ceca;
+    border-radius: 10px;
+    background: #fff0ee;
+    color: #b83232;
+    padding: 10px 13px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.equipment-delete:hover {
+    background: #c83e3e;
+    color: white;
+}
+
+.equipment-maintenance-list {
+    display: grid;
+    gap: 13px;
+}
+
+.equipment-maintenance-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) auto auto;
+    align-items: center;
+    gap: 18px;
+    padding: 17px;
+    border: 1px solid #dce9de;
+    border-radius: 13px;
+    background: linear-gradient(145deg, #ffffff, #f4f9f4);
+}
+
+.equipment-maintenance-info {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    min-width: 0;
+}
+
+.equipment-maintenance-icon {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: #e5f3e7;
+    font-size: 21px;
+}
+
+.equipment-maintenance-info h3 {
+    margin: 0 0 6px;
+    color: #244b32;
+    font-size: 15px;
+    overflow-wrap: anywhere;
+}
+
+.equipment-maintenance-info p,
+.equipment-maintenance-info small {
+    display: block;
+    margin: 0 0 5px;
+    color: #718171;
+    font-size: 12px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.equipment-maintenance-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.equipment-maintenance-meta > strong {
+    color: #244b32;
+    font-size: 16px;
+}
+
+.equipment-record-status {
+    display: inline-flex;
+    padding: 6px 9px;
+    border-radius: 7px;
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.equipment-record-status.is-completed {
+    color: #176638;
+    background: #d7f1dd;
+    border: 1px solid #b2dfbd;
+}
+
+.equipment-record-status.is-upcoming {
+    color: #79520d;
+    background: #ffedbd;
+    border: 1px solid #eed48b;
+}
+
+.equipment-record-status.is-overdue {
+    color: #a52c2c;
+    background: #ffe0df;
+    border: 1px solid #f2bdbc;
+}
+
+.equipment-maintenance-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.equipment-maintenance-actions .fc-button,
+.equipment-maintenance-actions .equipment-delete {
+    padding: 9px 11px;
+    font-size: 11px;
+    white-space: nowrap;
+}
+
+.equipment-footer {
+    padding: 15px 2px;
+    color: #718171;
+    font-size: 13px;
+    text-align: right;
+}
+
+@media (max-width: 1050px) {
+    .equipment-maintenance-card {
+        grid-template-columns: minmax(0, 1fr) auto;
+    }
+
+    .equipment-maintenance-actions {
+        grid-column: 1 / -1;
+        justify-content: flex-start;
+    }
+}
+
+@media (max-width: 650px) {
+    .equipment-form-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .equipment-full-width {
+        grid-column: auto;
+    }
+
+    .equipment-maintenance-card {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 14px;
+    }
+
+    .equipment-maintenance-actions {
+        grid-column: auto;
+        justify-content: flex-start;
+    }
+
+    .equipment-card-actions {
+        flex-direction: column;
+    }
+
+    .equipment-card-actions .fc-button {
+        width: 100%;
+    }
+}
+.equipment-maintenance-details {
+    flex: 1;
+    min-width: 0;
+}
+
+.equipment-maintenance-details h3 {
+    margin: 0 0 6px;
+    color: #173d2b;
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.maintenance-equipment-name {
+    margin: 0 0 8px;
+    color: #648071;
+    font-size: 13px;
+}
+
+.maintenance-date {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 5px 0;
+    font-size: 13px;
+}
+
+.maintenance-date span {
+    color: #718477;
+}
+
+.maintenance-date strong {
+    color: #234b35;
+    font-weight: 600;
+}
+
+.maintenance-notes {
+    margin: 8px 0 0;
+    color: #65786b;
+    font-size: 13px;
+    overflow-wrap: anywhere;
+}
+
+
+/* Add Equipment modal */
+.equipment-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(24, 66, 48, 0.42);
+    backdrop-filter: blur(9px);
+    -webkit-backdrop-filter: blur(9px);
+    overflow-y: auto;
+}
+
+.equipment-modal {
+    width: min(100%, 580px);
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
+    padding: 36px;
+    border: 1px solid #d6f0df;
+    border-radius: 24px;
+    background: #fff;
+    box-shadow: 0 20px 60px rgba(18, 65, 43, 0.2);
+    animation: equipmentModalIn 180ms ease-out;
+}
+
+.equipment-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    padding-bottom: 18px;
+    margin-bottom: 22px;
+    border-bottom: 1px solid #d9f5e2;
+}
+
+.equipment-modal-header h2 {
+    margin: 0 0 8px;
+    color: #194b35;
+    font-size: 25px;
+    line-height: 1.25;
+}
+
+.equipment-modal-header p {
+    margin: 0;
+    color: #429777;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.equipment-modal-close {
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    border: none;
+    border-radius: 10px;
+    background: transparent;
+    color: #176342;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.equipment-modal-close:hover {
+    background: #edf8f0;
+}
+
+.equipment-modal .equipment-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px 14px;
+}
+
+.equipment-modal .equipment-form-grid label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    color: #173e2d;
+    font-size: 13px;
+    font-weight: 700;
+    min-width: 0;
+}
+
+.equipment-modal .equipment-form-grid input,
+.equipment-modal .equipment-form-grid select,
+.equipment-modal .equipment-form-grid textarea {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    padding: 11px 13px;
+    border: 1px solid #edf3ee;
+    border-radius: 15px;
+    outline: none;
+    background: #f8fbf8;
+    color: #214c39;
+    font: inherit;
+    font-weight: 500;
+    box-shadow: inset 0 3px 7px rgba(28, 73, 49, 0.07);
+    transition: border-color 160ms, box-shadow 160ms;
+}
+
+.equipment-modal .equipment-form-grid input:focus,
+.equipment-modal .equipment-form-grid select:focus,
+.equipment-modal .equipment-form-grid textarea:focus {
+    border-color: #78bb91;
+    box-shadow: 0 0 0 3px rgba(76, 155, 103, 0.12);
+}
+
+.equipment-modal .equipment-form-grid textarea {
+    resize: vertical;
+    min-height: 66px;
+}
+
+.equipment-modal .equipment-full-width {
+    grid-column: 1 / -1;
+}
+
+.equipment-modal .equipment-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 24px;
+    padding-top: 18px;
+    border-top: 1px solid #d9f5e2;
+}
+
+.equipment-modal .fc-primary {
+    border-radius: 14px;
+    box-shadow: 0 6px 14px rgba(28, 91, 59, 0.18);
+}
+
+@keyframes equipmentModalIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@media (max-width: 600px) {
+    .equipment-modal-overlay {
+        padding: 12px;
+        align-items: flex-start;
+    }
+
+    .equipment-modal {
+        margin: auto 0;
+        padding: 23px 18px;
+        max-height: calc(100vh - 24px);
+        border-radius: 20px;
+    }
+
+    .equipment-modal-header h2 {
+        font-size: 21px;
+    }
+
+    .equipment-modal .equipment-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .equipment-modal .equipment-full-width {
+        grid-column: auto;
+    }
+}
+
+/* Schedule Service Popup */
+.equipment-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(20, 48, 30, 0.48);
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
+    overflow-y: auto;
+}
+
+.equipment-service-modal {
+    width: 100%;
+    max-width: 590px;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+    padding: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 24px;
+    background: #fafff9;
+    box-shadow:
+            0 24px 70px rgba(19, 55, 29, 0.22),
+            inset 0 1px 2px rgba(255, 255, 255, 0.95);
+    animation: equipmentModalAppear 0.22s ease-out;
+}
+
+.equipment-modal-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 22px;
+}
+
+.equipment-modal-heading h2 {
+    margin: 5px 0 8px;
+    color: #204b2c;
+    font-size: 25px;
+    font-weight: 750;
+}
+
+.equipment-modal-heading p:not(.fc-eyebrow) {
+    margin: 0;
+    color: #708274;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.equipment-modal-close {
+    display: grid;
+    flex-shrink: 0;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border: none;
+    border-radius: 12px;
+    background: #edf5eb;
+    color: #285b35;
+    font-size: 27px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.equipment-modal-close:hover {
+    background: #dcebd9;
+    transform: rotate(90deg);
+}
+
+.equipment-selected-info {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 23px;
+    padding: 16px;
+    border: 1px solid #e1eddf;
+    border-radius: 16px;
+    background: #f0f7ee;
+}
+
+.equipment-selected-info > span {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: #dcebd8;
+    font-size: 25px;
+}
+
+.equipment-selected-info small {
+    display: block;
+    margin-bottom: 4px;
+    color: #718575;
+    font-size: 12px;
+}
+
+.equipment-selected-info strong {
+    display: block;
+    color: #244d2d;
+    font-size: 16px;
+}
+
+.equipment-selected-info p {
+    margin: 4px 0 0;
+    color: #748578;
+    font-size: 12px;
+}
+
+.equipment-service-modal .equipment-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.equipment-service-modal .equipment-form-grid label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+    color: #35523b;
+    font-size: 13px;
+    font-weight: 650;
+}
+
+.equipment-service-modal .equipment-full-width {
+    grid-column: 1 / -1;
+}
+
+.equipment-service-modal .equipment-form-grid input,
+.equipment-service-modal .equipment-form-grid textarea {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    padding: 12px 14px;
+    border: 1px solid #e0ebdd;
+    border-radius: 12px;
+    outline: none;
+    background: #f7fbf5;
+    color: #294a31;
+    font: inherit;
+    font-size: 14px;
+    box-shadow:
+            inset 3px 3px 7px rgba(40, 76, 44, 0.055),
+            inset -3px -3px 7px rgba(255, 255, 255, 0.9);
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.equipment-service-modal .equipment-form-grid input:focus,
+.equipment-service-modal .equipment-form-grid textarea:focus {
+    border-color: #73a87a;
+    box-shadow: 0 0 0 3px rgba(85, 145, 91, 0.12);
+}
+
+.equipment-service-modal .equipment-form-grid textarea {
+    resize: vertical;
+}
+
+.equipment-service-modal .equipment-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #e8f0e5;
+}
+
+.equipment-service-modal .fc-button {
+    min-height: 43px;
+    padding: 11px 18px;
+    border-radius: 12px;
+    font-weight: 650;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.equipment-service-modal .fc-primary {
+    border: 1px solid #28683b;
+    background: #28683b;
+    color: white;
+    box-shadow: 0 5px 12px rgba(40, 104, 59, 0.15);
+}
+
+.equipment-service-modal .fc-primary:hover:not(:disabled) {
+    background: #205630;
+    box-shadow: 0 7px 16px rgba(40, 104, 59, 0.22);
+    transform: translateY(-1px);
+}
+
+.equipment-service-modal .fc-secondary {
+    border: 1px solid #dce8d9;
+    background: #f0f6ee;
+    color: #355b3b;
+}
+
+.equipment-service-modal .fc-secondary:hover:not(:disabled) {
+    background: #e4efe1;
+}
+
+.equipment-service-modal button:disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
+}
+
+.equipment-modal-error {
+    margin: 16px 0 0;
+    color: #b42318;
+    font-size: 13px;
+}
+
+@keyframes equipmentModalAppear {
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@media (max-width: 560px) {
+    .equipment-modal-backdrop {
+        align-items: center;
+        padding: 12px;
+    }
+
+    .equipment-service-modal {
+        max-height: calc(100vh - 24px);
+        padding: 22px 18px;
+        border-radius: 19px;
+    }
+
+    .equipment-modal-heading h2 {
+        font-size: 21px;
+    }
+
+    .equipment-service-modal .equipment-form-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 15px;
+    }
+
+    .equipment-service-modal .equipment-full-width {
+        grid-column: auto;
+    }
+
+    .equipment-service-modal .equipment-form-actions {
+        flex-direction: column-reverse;
+    }
+
+    .equipment-service-modal .equipment-form-actions .fc-button {
+        width: 100%;
+    }
+}
+
+/* ==========================================
+   HARVESTHUB EQUIPMENT - PREMIUM UI
+   Append at the end of Equipment.css
+========================================== */
+
+.equipment-page {
+    --eq-green: #236b40;
+    --eq-dark: #173d2b;
+    --eq-muted: #718477;
+    --eq-border: #e2ece3;
+    --eq-soft: #f3f8f2;
+    color: var(--eq-dark);
+}
+
+.equipment-page .fc-header {
+    align-items: center;
+    gap: 20px;
+}
+
+.equipment-page .fc-header h1 {
+    color: var(--eq-dark);
+    letter-spacing: -0.8px;
+}
+
+.equipment-page .fc-header > div > p:last-child {
+    color: var(--eq-muted);
+    line-height: 1.7;
+}
+
+.equipment-page .fc-primary {
+    background: var(--eq-green);
+    border-color: var(--eq-green);
+    border-radius: 12px;
+    box-shadow: 0 5px 13px rgba(35, 107, 64, 0.13);
+    transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.equipment-page .fc-primary:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(35, 107, 64, 0.2);
+}
+
+/* Summary statistics */
+
+.equipment-page .fc-summary.equipment-summary {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+    margin: 25px 0 32px;
+}
+
+.equipment-page .equipment-stat-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    min-width: 0;
+    padding: 21px 19px;
+    border: 1px solid #e3ece3;
+    border-radius: 20px;
+    background: linear-gradient(145deg, #ffffff 10%, #f5f9f4 100%);
+    box-shadow:
+            7px 7px 18px rgba(34, 74, 44, 0.045),
+            -5px -5px 15px rgba(255, 255, 255, 0.9);
+    transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.equipment-page .equipment-stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 26px rgba(34, 74, 44, 0.09);
+}
+
+.equipment-stat-icon {
+    display: grid;
+    place-items: center;
+    flex: 0 0 53px;
+    width: 53px;
+    height: 53px;
+    border: 1px solid #dcebdc;
+    border-radius: 17px;
+    background: #e9f5e9;
+    color: #236b40;
+}
+
+.equipment-stat-icon.is-upcoming {
+    background: #fff5db;
+    border-color: #f1e4b9;
+    color: #a66b12;
+}
+
+.equipment-stat-icon.is-overdue {
+    background: #fff0ed;
+    border-color: #f2d8d2;
+    color: #bd473a;
+}
+
+.equipment-stat-icon.is-completed {
+    background: #e7f6eb;
+    border-color: #d2ead8;
+    color: #28794a;
+}
+
+.equipment-page .equipment-stat-card > div {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    gap: 4px;
+}
+
+.equipment-page .equipment-stat-card > div > span {
+    color: #6c8070;
+    font-size: 12px;
+    font-weight: 650;
+}
+
+.equipment-page .equipment-stat-card strong {
+    color: #1a4c30;
+    font-size: 27px;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.equipment-page .equipment-stat-card small {
+    color: #829184;
+    font-size: 11px;
+    line-height: 1.4;
+}
+
+/* Section headings */
+
+.equipment-page .fc-section {
+    margin-top: 28px;
+}
+
+.equipment-page .fc-section-heading {
+    align-items: center;
+    margin-bottom: 19px;
+}
+
+.equipment-page .fc-section-heading h2 {
+    color: #1c4930;
+    font-size: 21px;
+    font-weight: 750;
+    letter-spacing: -0.35px;
+}
+
+.equipment-page .fc-section-heading p {
+    margin-top: 6px;
+    color: #7a8b7d;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+/* Equipment cards */
+
+.equipment-page .equipment-grid {
+    gap: 21px;
+}
+
+.equipment-page .equipment-card {
+    position: relative;
+    padding: 23px;
+    overflow: hidden;
+    border: 1px solid #e1ebe0;
+    border-radius: 21px;
+    background: linear-gradient(150deg, #ffffff 0%, #f7faf5 100%);
+    box-shadow: 0 5px 17px rgba(34, 74, 44, 0.045);
+    transition:
+            transform 200ms ease,
+            border-color 200ms ease,
+            box-shadow 200ms ease;
+}
+
+.equipment-page .equipment-card:hover {
+    transform: translateY(-4px);
+    border-color: #c8dfca;
+    box-shadow: 0 13px 28px rgba(34, 74, 44, 0.09);
+}
+
+.equipment-page .equipment-card .fc-field-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.equipment-page .equipment-card .fc-field-icon.equipment-machine-icon {
+    display: grid;
+    place-items: center;
+    flex: 0 0 68px;
+    width: 68px;
+    height: 68px;
+    border: 1px solid #dcebdc;
+    border-radius: 21px;
+    background: linear-gradient(145deg, #edf8ec, #deefdf);
+    color: #236b40;
+}
+
+.equipment-page .equipment-status {
+    padding: 7px 10px;
+    border: 1px solid #cce6d0;
+    border-radius: 999px;
+    background: #e9f7ec;
+    color: #277243;
+    font-size: 10px;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+}
+
+.equipment-page .equipment-card h3 {
+    margin: 0 0 8px;
+    color: #1b4930;
+    font-size: 19px;
+    font-weight: 750;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+}
+
+.equipment-page .equipment-card .fc-area {
+    margin: 0 0 19px;
+    color: #748576;
+    font-size: 12px;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+}
+
+.equipment-page .equipment-card .fc-details {
+    display: grid;
+    gap: 0;
+    padding: 5px 13px;
+    border: 1px solid #e7eee5;
+    border-radius: 14px;
+    background: rgba(242, 248, 240, 0.75);
+}
+
+.equipment-page .equipment-card .fc-details p {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 11px 0;
+    margin: 0;
+    border-bottom: 1px solid #e5ede3;
+}
+
+.equipment-page .equipment-card .fc-details p:last-child {
+    border-bottom: 0;
+}
+
+.equipment-page .equipment-card .fc-details p span {
+    color: #778779;
+    font-size: 12px;
+}
+
+.equipment-page .equipment-card .fc-details p strong {
+    color: #2c5439;
+    font-size: 12px;
+    font-weight: 650;
+    text-align: right;
+    overflow-wrap: anywhere;
+}
+
+.equipment-page .equipment-notes {
+    border: 1px solid #e4eee2;
+    border-radius: 12px;
+    background: #f2f8f0;
+    color: #697d6d;
+    font-size: 12px;
+    line-height: 1.65;
+    overflow-wrap: anywhere;
+}
+
+.equipment-page .equipment-card-actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.equipment-page .equipment-card-actions .fc-button,
+.equipment-page .equipment-card-actions .equipment-delete {
+    min-height: 41px;
+    padding: 10px 13px;
+    border-radius: 11px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.equipment-page .equipment-card-actions .fc-secondary {
+    border: 1px solid #cfe3d1;
+    background: #edf6ec;
+    color: #286540;
+}
+
+.equipment-page .equipment-card-actions .fc-secondary:hover {
+    background: #e0efdf;
+}
+
+.equipment-page .equipment-card-actions .equipment-delete {
+    border: 1px solid #f0d8d4;
+    background: #fff4f2;
+    color: #b54136;
+}
+
+.equipment-page .equipment-card-actions .equipment-delete:hover {
+    background: #ffe5e0;
+}
+
+/* Maintenance records */
+
+.equipment-page .equipment-record-count {
+    padding: 8px 12px;
+    border: 1px solid #d6e8d5;
+    border-radius: 999px;
+    background: #edf6eb;
+    color: #2b7042;
+    font-size: 11px;
+}
+
+.equipment-page .equipment-maintenance-list {
+    gap: 15px;
+}
+
+.equipment-page .equipment-maintenance-card {
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    gap: 22px;
+    padding: 21px;
+    border: 1px solid #e1ebe0;
+    border-radius: 19px;
+    background: linear-gradient(145deg, #ffffff, #f7faf5);
+    box-shadow: 0 4px 14px rgba(34, 74, 44, 0.035);
+    transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.equipment-page .equipment-maintenance-card:hover {
+    border-color: #c9dfca;
+    box-shadow: 0 8px 22px rgba(34, 74, 44, 0.07);
+}
+
+.equipment-page .equipment-maintenance-info {
+    gap: 15px;
+}
+
+.equipment-page .equipment-maintenance-icon {
+    display: grid;
+    place-items: center;
+    flex: 0 0 50px;
+    width: 50px;
+    height: 50px;
+    border: 1px solid #d9ead8;
+    border-radius: 16px;
+    background: #eaf5e8;
+    color: #286b40;
+}
+
+.equipment-page .equipment-maintenance-details h3 {
+    margin: 1px 0 7px;
+    color: #1c4930;
+    font-size: 16px;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+}
+
+.equipment-page .maintenance-equipment-name {
+    color: #64806b;
+    font-size: 12px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.equipment-page .maintenance-date {
+    gap: 7px;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.equipment-page .maintenance-date span {
+    color: #7c8b7e;
+}
+
+.equipment-page .maintenance-date strong {
+    color: #385a40;
+    font-weight: 650;
+}
+
+.equipment-page .maintenance-notes {
+    max-width: 520px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.equipment-page .equipment-maintenance-meta {
+    align-items: flex-start;
+    justify-content: center;
+    gap: 10px;
+}
+
+.equipment-page .equipment-maintenance-meta > strong {
+    color: #1d5032;
+    font-size: 19px;
+    white-space: nowrap;
+}
+
+.equipment-page .equipment-record-status {
+    padding: 7px 10px;
+    border-radius: 999px;
+    font-size: 10px;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+}
+
+.equipment-page .equipment-record-status.is-completed {
+    background: #e5f6e8;
+    color: #247342;
+    border-color: #cde8d1;
+}
+
+.equipment-page .equipment-record-status.is-upcoming {
+    background: #fff5dd;
+    color: #966513;
+    border-color: #f0e0b6;
+}
+
+.equipment-page .equipment-record-status.is-overdue {
+    background: #fff0ed;
+    color: #b63f34;
+    border-color: #f0d2cc;
+}
+
+.equipment-page .equipment-maintenance-actions {
+    align-items: center;
+    gap: 9px;
+}
+
+.equipment-page .equipment-maintenance-actions .fc-button,
+.equipment-page .equipment-maintenance-actions .equipment-delete {
+    min-height: 38px;
+    padding: 9px 12px;
+    border-radius: 10px;
+    font-size: 11px;
+}
+
+.equipment-page .equipment-maintenance-actions .equipment-delete {
+    border: 1px solid #f0d8d4;
+    background: #fff4f2;
+    color: #b54136;
+}
+
+.equipment-page .equipment-maintenance-actions .equipment-delete:hover {
+    background: #ffe5e0;
+}
+
+.equipment-page .fc-empty {
+    padding: 42px 20px;
+    border: 1px dashed #cbdccb;
+    border-radius: 20px;
+    background: #f8fbf6;
+    text-align: center;
+}
+
+.equipment-page .fc-empty h3 {
+    margin: 12px 0 8px;
+    color: #214d32;
+}
+
+.equipment-page .fc-empty p {
+    color: #78887a;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.equipment-page .equipment-footer {
+    color: #718477;
+    font-size: 12px;
+}
+
+/* Keep modals above the rest of the page */
+
+.equipment-modal-overlay,
+.equipment-modal-backdrop {
+    z-index: 10000;
+}
+
+.equipment-page button:focus-visible {
+    outline: 3px solid rgba(54, 130, 75, 0.35);
+    outline-offset: 3px;
+}
+
+/* Tablet */
+
+@media (max-width: 1100px) {
+    .equipment-page .fc-summary.equipment-summary {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .equipment-page .equipment-maintenance-card {
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 17px;
+    }
+
+    .equipment-page .equipment-maintenance-actions {
+        grid-column: 1 / -1;
+        justify-content: flex-end;
+    }
+}
+
+/* Mobile */
+
+@media (max-width: 650px) {
+    .equipment-page .fc-summary.equipment-summary {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 12px;
+    }
+
+    .equipment-page .equipment-stat-card {
+        padding: 16px;
+        border-radius: 16px;
+    }
+
+    .equipment-stat-icon {
+        flex-basis: 47px;
+        width: 47px;
+        height: 47px;
+        border-radius: 14px;
+    }
+
+    .equipment-page .equipment-stat-card strong {
+        font-size: 24px;
+    }
+
+    .equipment-page .equipment-card {
+        padding: 18px;
+        border-radius: 18px;
+    }
+
+    .equipment-page .equipment-card-actions {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .equipment-page .equipment-card-actions .fc-button,
+    .equipment-page .equipment-card-actions .equipment-delete {
+        width: 100%;
+    }
+
+    .equipment-page .equipment-maintenance-card {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 16px;
+        padding: 17px;
+        border-radius: 16px;
+    }
+
+    .equipment-page .equipment-maintenance-meta {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    .equipment-page .equipment-maintenance-actions {
+        grid-column: auto;
+        justify-content: flex-start;
+    }
+
+    .equipment-page .equipment-maintenance-actions .fc-button,
+    .equipment-page .equipment-maintenance-actions .equipment-delete {
+        flex: 1;
+    }
+
+    .equipment-page .fc-section-heading h2 {
+        font-size: 19px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .equipment-page *,
+    .equipment-page *::before,
+    .equipment-page *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ===== Maintenance Records Layout Fix ===== */
+
+/* Heading, description and records badge */
+.equipment-maintenance-list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.equipment-maintenance-list > h2,
+.equipment-maintenance-list > h3 {
+    margin: 0;
+}
+
+.equipment-maintenance-list > p {
+    margin: 0;
+}
+
+.equipment-maintenance-list .equipment-record-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-start;
+    width: fit-content;
+    min-height: 38px;
+    margin: 0;
+    padding: 8px 16px;
+    border-radius: 24px;
+    position: static;
+    line-height: 1.3;
+}
+
+/* Each maintenance record */
+.equipment-maintenance-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 125px 130px auto auto;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 24px 26px;
+}
+
+/* Maintenance details stay on the left */
+.equipment-maintenance-info {
+    min-width: 0;
+}
+
+/* Price in the middle */
+.equipment-maintenance-details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    min-width: 0;
+    gap: 8px;
+}
+
+/* Status badge */
+.equipment-record-status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    justify-self: start;
+    width: fit-content;
+    white-space: nowrap;
+}
+
+/* Complete and Delete buttons */
+.equipment-maintenance-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    white-space: nowrap;
+}
+
+/* Keep buttons from stretching */
+.equipment-maintenance-actions button {
+    flex-shrink: 0;
+}
+
+/* Responsive layout */
+@media (max-width: 1100px) {
+    .equipment-maintenance-card {
+        grid-template-columns: minmax(0, 1fr) 110px 120px;
+        gap: 16px;
+    }
+
+    .equipment-maintenance-actions {
+        grid-column: 2 / -1;
+        justify-content: flex-end;
+    }
+}
+
+@media (max-width: 650px) {
+    .equipment-maintenance-card {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 14px;
+        padding: 20px;
+    }
+
+    .equipment-maintenance-details {
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .equipment-maintenance-actions {
+        grid-column: auto;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+    }
+}
+
+/* ===== Maintenance Records: Final Layout Fix ===== */
+
+/* Heading and record count */
+.equipment-page .equipment-maintenance-heading {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 12px;
+    margin-bottom: 22px;
+}
+
+.equipment-page .equipment-maintenance-heading-text {
+    min-width: 0;
+}
+
+.equipment-page .equipment-maintenance-heading h2 {
+    margin: 0 0 8px;
+}
+
+.equipment-page .equipment-maintenance-heading p {
+    margin: 0;
+    line-height: 1.5;
+}
+
+.equipment-page .equipment-maintenance-heading .equipment-record-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: static;
+    width: fit-content;
+    min-height: 38px;
+    margin: 0;
+    padding: 8px 16px;
+    line-height: 1.3;
+    white-space: nowrap;
+    box-sizing: border-box;
+}
+
+/* Record: details | price | status | complete | delete */
+.equipment-page .equipment-maintenance-card {
+    display: grid;
+    grid-template-columns: minmax(220px, 1fr) 125px 125px auto;
+    align-items: center;
+    gap: 18px;
+    width: 100%;
+    padding: 24px 26px;
+    box-sizing: border-box;
+}
+
+.equipment-page .equipment-maintenance-info {
+    min-width: 0;
+}
+
+.equipment-page .equipment-maintenance-details {
+    flex: 1;
+    min-width: 0;
+}
+
+/* Price column */
+.equipment-page .equipment-maintenance-price {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    min-width: 0;
+}
+
+.equipment-page .equipment-maintenance-price strong {
+    color: #1d5032;
+    font-size: 21px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+/* Status column */
+.equipment-page .equipment-maintenance-status {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    min-width: 0;
+}
+
+.equipment-page .equipment-maintenance-status .equipment-record-status {
+    white-space: nowrap;
+}
+
+/* Complete and Delete actions */
+.equipment-page .equipment-maintenance-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: nowrap;
+    gap: 10px;
+    min-width: 0;
+}
+
+.equipment-page .equipment-maintenance-actions button {
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+/* Tablet */
+@media (max-width: 1150px) {
+    .equipment-page .equipment-maintenance-card {
+        grid-template-columns: minmax(0, 1fr) 110px 120px;
+        gap: 16px;
+    }
+
+    .equipment-page .equipment-maintenance-price {
+        grid-column: 2;
+        grid-row: 1;
+    }
+
+    .equipment-page .equipment-maintenance-status {
+        grid-column: 2;
+        grid-row: 2;
+    }
+
+    .equipment-page .equipment-maintenance-actions {
+        grid-column: 3;
+        grid-row: 1 / span 2;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+    }
+}
+
+/* Mobile */
+@media (max-width: 650px) {
+    .equipment-page .equipment-maintenance-card {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 15px;
+        padding: 18px;
+    }
+
+    .equipment-page .equipment-maintenance-price,
+    .equipment-page .equipment-maintenance-status,
+    .equipment-page .equipment-maintenance-actions {
+        grid-column: auto;
+        grid-row: auto;
+    }
+
+    .equipment-page .equipment-maintenance-price strong {
+        font-size: 20px;
+    }
+
+    .equipment-page .equipment-maintenance-actions {
+        justify-content: flex-start;
+        flex-wrap: wrap;
+    }
+}

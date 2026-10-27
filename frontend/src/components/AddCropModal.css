@@ -1,0 +1,227 @@
+
+.hc-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    overflow-y: auto;
+    background: rgba(24, 66, 48, 0.42);
+    backdrop-filter: blur(9px);
+    -webkit-backdrop-filter: blur(9px);
+}
+
+.hc-modal {
+    box-sizing: border-box;
+    width: min(100%, 580px);
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
+    padding: 34px 36px;
+    border: 1px solid #d6f0df;
+    border-radius: 24px;
+    background: #fff;
+    box-shadow: 0 20px 60px rgba(18, 65, 43, 0.2);
+    animation: hcModalIn 180ms ease-out;
+}
+
+.hc-modal-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 22px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid #d9f5e2;
+}
+
+.hc-modal-heading h2 {
+    margin: 0 0 8px;
+    color: #194b35;
+    font-size: 25px;
+    line-height: 1.3;
+    font-weight: 750;
+}
+
+.hc-modal-heading p {
+    margin: 0;
+    color: #429777;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.hc-modal-heading .hc-eyebrow {
+    margin-bottom: 7px;
+    color: #26865a;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+}
+
+.hc-close {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border: none;
+    border-radius: 10px;
+    background: transparent;
+    color: #176342;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.hc-close:hover:not(:disabled) {
+    background: #edf8f0;
+}
+
+.hc-modal form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.hc-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+}
+
+.hc-group label {
+    color: #173e2d;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.hc-group input,
+.hc-group select {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    min-height: 42px;
+    padding: 10px 13px;
+    border: 1px solid #edf3ee;
+    border-radius: 15px;
+    outline: none;
+    background: #f8fbf8;
+    color: #214c39;
+    font: inherit;
+    font-size: 13px;
+    box-shadow: inset 0 3px 7px rgba(28, 73, 49, 0.07);
+    transition: border-color 160ms, box-shadow 160ms;
+}
+
+.hc-group input::placeholder {
+    color: #8a9f93;
+}
+
+.hc-group input:focus,
+.hc-group select:focus {
+    border-color: #78bb91;
+    box-shadow: 0 0 0 3px rgba(76, 155, 103, 0.12);
+}
+
+.hc-date-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.hc-error {
+    margin: 0;
+    padding: 11px 13px;
+    border: 1px solid #f3c8c5;
+    border-radius: 12px;
+    background: #fff4f3;
+    color: #b42318;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.hc-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 4px;
+    padding-top: 18px;
+    border-top: 1px solid #d9f5e2;
+}
+
+.hc-modal-actions button {
+    min-height: 43px;
+    padding: 11px 20px;
+    border-radius: 14px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 160ms, box-shadow 160ms;
+}
+
+.hc-modal-actions button:hover:not(:disabled) {
+    transform: translateY(-1px);
+}
+
+.hc-secondary {
+    border: 1px solid #d5eadb;
+    background: #fff;
+    color: #286347;
+    box-shadow: 0 4px 10px rgba(36, 87, 57, 0.06);
+}
+
+.hc-primary {
+    border: 1px solid #246647;
+    background: linear-gradient(135deg, #347957, #194b35);
+    color: #fff;
+    box-shadow: 0 6px 14px rgba(28, 91, 59, 0.2);
+}
+
+.hc-modal-actions button:disabled,
+.hc-close:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+@keyframes hcModalIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@media (max-width: 600px) {
+    .hc-modal-backdrop {
+        align-items: flex-start;
+        padding: 12px;
+    }
+
+    .hc-modal {
+        width: 100%;
+        max-height: calc(100vh - 24px);
+        margin: auto 0;
+        padding: 24px 18px;
+        border-radius: 20px;
+    }
+
+    .hc-modal-heading h2 {
+        font-size: 21px;
+    }
+
+    .hc-date-row {
+        grid-template-columns: 1fr;
+    }
+
+    .hc-modal-actions button {
+        flex: 1;
+    }
+}

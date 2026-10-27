@@ -1,0 +1,972 @@
+
+.fc-page {
+    min-height: 100vh;
+    padding: 32px;
+    background: #f2f7f3;
+    color: #153d2b;
+}
+
+.fc-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 22px;
+    margin-bottom: 28px;
+}
+
+.fc-back {
+    display: block;
+    margin-bottom: 18px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #287a43;
+    cursor: pointer;
+    font-weight: 650;
+}
+
+.fc-eyebrow {
+    color: #368653;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+}
+
+.fc-header h1 {
+    margin: 8px 0;
+    font-size: clamp(27px, 4vw, 38px);
+}
+
+.fc-header p {
+    color: #688171;
+}
+
+.fc-header-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.fc-button {
+    padding: 12px 17px;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.fc-primary {
+    border: 1px solid #176b3a;
+    background: #176b3a;
+    color: white;
+}
+
+.fc-secondary {
+    border: 1px solid #d6e6da;
+    background: white;
+    color: #205638;
+}
+
+.fc-summary {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 30px;
+}
+
+.fc-summary article,
+.fc-section,
+.fc-field-card {
+    border: 1px solid #dcebe0;
+    border-radius: 18px;
+    background: #fff;
+    box-shadow: 0 8px 25px rgba(25, 77, 44, 0.04);
+}
+
+.fc-summary article {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 22px;
+}
+
+.fc-summary span,
+.fc-area,
+.fc-details span {
+    color: #6b8475;
+    font-size: 13px;
+}
+
+.fc-summary strong {
+    font-size: 30px;
+}
+
+.fc-section {
+    padding: 24px;
+}
+
+.fc-section-heading {
+    margin-bottom: 22px;
+}
+
+.fc-section-heading h2 {
+    margin: 0 0 7px;
+}
+
+.fc-section-heading p {
+    margin: 0;
+    color: #6b8475;
+    font-size: 14px;
+}
+
+.fc-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.fc-field-card {
+    min-width: 0;
+    padding: 20px;
+}
+
+.fc-field-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.fc-field-icon {
+    display: grid;
+    width: 46px;
+    height: 46px;
+    place-items: center;
+    border-radius: 14px;
+    background: #e8f5e9;
+    font-size: 24px;
+}
+
+.fc-count {
+    padding: 6px 10px;
+    border-radius: 20px;
+    background: #edf7ef;
+    color: #287a43;
+    font-size: 12px;
+}
+
+.fc-field-card h3 {
+    margin: 18px 0 5px;
+    overflow-wrap: anywhere;
+}
+
+.fc-area {
+    margin-top: 0;
+}
+
+.fc-details {
+    margin: 18px 0;
+    padding: 14px 0;
+    border-top: 1px solid #edf2ee;
+    border-bottom: 1px solid #edf2ee;
+}
+
+.fc-details p {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 8px 0;
+    font-size: 13px;
+}
+
+.fc-details strong {
+    text-align: right;
+    overflow-wrap: anywhere;
+}
+
+.fc-crops-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 14px;
+}
+
+.fc-crops-heading button {
+    border: 0;
+    background: transparent;
+    color: #287a43;
+    font-weight: 750;
+    cursor: pointer;
+}
+
+.fc-no-crops {
+    color: #718778;
+    font-size: 13px;
+}
+
+.fc-crop-list {
+    display: grid;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.fc-crop-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px;
+    border-radius: 12px;
+    background: #f4f9f4;
+}
+
+.fc-crop-item > span {
+    font-size: 21px;
+}
+
+.fc-crop-item div {
+    display: grid;
+    gap: 5px;
+    min-width: 0;
+}
+
+.fc-crop-item small {
+    color: #698171;
+    overflow-wrap: anywhere;
+}
+
+.fc-empty {
+    padding: 42px 15px;
+    text-align: center;
+}
+
+.fc-empty > span {
+    font-size: 38px;
+}
+
+.fc-empty p {
+    color: #698171;
+}
+
+.fc-error {
+    margin-bottom: 18px;
+    color: #b42318;
+}
+
+.fc-error button {
+    margin-left: 12px;
+}
+
+@media (max-width: 1050px) {
+    .fc-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 650px) {
+    .fc-page {
+        padding: 18px;
+    }
+
+    .fc-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .fc-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .fc-header-actions {
+        width: 100%;
+    }
+
+    .fc-header-actions .fc-button {
+        flex: 1;
+    }
+
+    .fc-section {
+        padding: 16px;
+    }
+}
+
+/* Shared Dashboard sidebar layout */
+.hh-dashboard.fc-shell {
+    grid-template-columns: 225px minmax(0, 1fr);
+    align-items: start;
+    min-height: 100vh;
+    gap: 22px;
+    padding: 22px;
+}
+
+.fc-main {
+    min-width: 0;
+    width: 100%;
+}
+
+.fc-main .fc-page {
+    min-height: calc(100vh - 44px);
+    padding: 10px;
+    background: transparent;
+}
+
+/* Tablet */
+@media (max-width: 1150px) {
+    .hh-dashboard.fc-shell {
+        grid-template-columns: 200px minmax(0, 1fr);
+        gap: 16px;
+        padding: 16px;
+    }
+
+    .fc-main .fc-page {
+        padding: 8px;
+    }
+
+    .fc-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+    .hh-dashboard.fc-shell {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        padding: 12px;
+    }
+
+    .hh-dashboard.fc-shell .hh-sidebar {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .fc-main .fc-page {
+        width: 100%;
+        min-height: auto;
+        padding: 8px 2px;
+    }
+
+    .fc-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .fc-summary {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* Field Operations - clean HarvestHub design */
+
+.fc-card-grid .fc-card {
+    background: #ffffff;
+    border: 1px solid #e4ece4;
+    border-radius: 16px;
+    padding: 22px;
+    box-shadow: 0 3px 12px rgba(37, 75, 47, 0.05);
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.fc-card-grid .fc-card::before {
+    display: none;
+}
+
+.fc-card-grid .fc-card:hover {
+    transform: none;
+    border-color: #c8ddca;
+    box-shadow: 0 5px 16px rgba(37, 75, 47, 0.08);
+}
+
+.fc-card-grid .fc-card-top h3 {
+    color: #244b32;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.fc-card-grid .fc-card-details {
+    background: #f7faf7;
+    border: 1px solid #edf2ed;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: none;
+}
+
+/* Buttons: simple green and red, matching farm management UI */
+.fc-card-grid .fc-card-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: auto;
+}
+
+.fc-card-grid .fc-card-actions .fc-button {
+    flex: 0 0 auto;
+    min-width: 88px;
+    min-height: 36px;
+    padding: 9px 16px;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    background: #edf6ee;
+    color: #28723c;
+    border: 1px solid #d5e8d7;
+    box-shadow: none;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.fc-card-grid .fc-card-actions .fc-button:hover {
+    transform: none;
+    background: #dcefe0;
+    color: #1e5c30;
+    box-shadow: none;
+}
+
+.fc-card-grid .fc-card-actions .fc-danger {
+    background: #fff1f0;
+    color: #c03935;
+    border: 1px solid #f1d2cf;
+    box-shadow: none;
+}
+
+.fc-card-grid .fc-card-actions .fc-danger:hover {
+    background: #c03935;
+    color: #ffffff;
+    border-color: #c03935;
+    box-shadow: none;
+}
+
+@media (max-width: 520px) {
+    .fc-card-grid .fc-card {
+        padding: 17px;
+    }
+
+    .fc-card-grid .fc-card-actions .fc-button {
+        min-width: 78px;
+        padding: 9px 12px;
+    }
+}
+
+
+/* Scheduled Activities - Fields & Crops style box */
+
+.fc-main .fc-page > .fc-section:last-child {
+    background: #ffffff;
+    border: 1px solid #e5ece5;
+    border-radius: 18px;
+    padding: 26px;
+    margin-top: 28px;
+    box-shadow: 0 4px 14px rgba(37, 75, 47, 0.05);
+}
+
+/* Section heading */
+.fc-main .fc-page > .fc-section:last-child .fc-section-heading {
+    margin-bottom: 22px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid #edf1ed;
+}
+
+.fc-main .fc-page > .fc-section:last-child .fc-section-heading h2 {
+    color: #244b32;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.fc-main .fc-page > .fc-section:last-child .fc-section-heading p {
+    color: #718078;
+    margin-top: 6px;
+}
+
+/* Each scheduled activity as a separate box */
+.fc-main .fc-card-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.fc-main .fc-card-grid .fc-card {
+    background: #f9fbf9;
+    border: 1px solid #e6eee6;
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: none;
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.fc-main .fc-card-grid .fc-card::before {
+    display: none;
+}
+
+.fc-main .fc-card-grid .fc-card:hover {
+    transform: none;
+    background: #ffffff;
+    border-color: #c9dfcc;
+    box-shadow: 0 3px 10px rgba(37, 75, 47, 0.05);
+}
+
+/* Details inside each activity box */
+.fc-main .fc-card-grid .fc-card-details {
+    background: #ffffff;
+    border: 1px solid #edf1ed;
+    border-radius: 10px;
+    padding: 14px;
+    box-shadow: none;
+}
+
+/* Edit and Delete buttons */
+.fc-main .fc-card-grid .fc-card-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 4px;
+}
+
+.fc-main .fc-card-grid .fc-card-actions .fc-button {
+    flex: 0 0 auto;
+    min-width: 85px;
+    padding: 9px 15px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    box-shadow: none;
+}
+
+@media (max-width: 900px) {
+    .fc-main .fc-card-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+@media (max-width: 520px) {
+    .fc-main .fc-page > .fc-section:last-child {
+        padding: 16px;
+        border-radius: 14px;
+    }
+
+    .fc-main .fc-card-grid .fc-card {
+        padding: 16px;
+    }
+}
+
+/* =========================================
+   HARVESTHUB - SCHEDULED ACTIVITIES
+   Compact 3-column layout
+   ========================================= */
+
+/* Outer section box */
+.fc-main .fc-page > .fc-section:last-child {
+    background: #f1f7f1;
+    border: 1px solid #d6e5d7;
+    border-radius: 16px;
+    padding: 22px;
+    margin-top: 24px;
+    box-shadow: 0 4px 14px rgba(35, 78, 45, 0.07);
+}
+
+/* Section heading */
+.fc-main .fc-page > .fc-section:last-child .fc-section-heading {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #d5e5d6;
+}
+
+.fc-main .fc-page > .fc-section:last-child .fc-section-heading h2 {
+    color: #1f5130;
+    font-size: 22px;
+    font-weight: 750;
+}
+
+.fc-main .fc-page > .fc-section:last-child .fc-section-heading p {
+    color: #58735e;
+    font-size: 14px;
+}
+
+/* Three cards per row */
+.fc-main .fc-card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 17px;
+}
+
+/* Individual operation card */
+.fc-main .fc-card-grid .fc-card {
+    min-width: 0;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+
+    background: linear-gradient(145deg, #ffffff, #e8f2e9);
+    border: 1px solid #cfe1d1;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(37, 83, 47, 0.08);
+
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.fc-main .fc-card-grid .fc-card::before {
+    display: none;
+}
+
+.fc-main .fc-card-grid .fc-card:hover {
+    transform: translateY(-3px);
+    border-color: #9fc8a5;
+    box-shadow: 0 8px 17px rgba(37, 83, 47, 0.12);
+}
+
+/* Operation type + status row */
+.fc-main .fc-card-grid .fc-card-top {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 11px;
+    margin-bottom: 15px;
+}
+
+.fc-main .fc-card-grid .fc-card-top > div {
+    width: 100%;
+}
+
+/* Operation type label */
+.fc-main .fc-card-grid .fc-card-top .fc-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    max-width: 100%;
+    padding: 6px 10px;
+    margin: 0 0 10px;
+
+    background: #d8ebda;
+    border: 1px solid #c0dfc4;
+    border-radius: 7px;
+
+    color: #245e32;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.9px;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+}
+
+/* Operation title */
+.fc-main .fc-card-grid .fc-card-top h3 {
+    margin: 0;
+    color: #214b2d;
+    font-size: 17px;
+    font-weight: 750;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+}
+
+/* Status pill */
+.fc-main .fc-card-grid .fc-status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    max-width: 100%;
+    padding: 6px 10px;
+
+    border-radius: 7px;
+    font-size: 11px;
+    font-weight: 750;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+}
+
+.fc-main .fc-card-grid .fc-status.planned {
+    color: #79520d;
+    background: #ffedbd;
+    border: 1px solid #eed48b;
+}
+
+.fc-main .fc-card-grid .fc-status.in-progress {
+    color: #155a91;
+    background: #dceeff;
+    border: 1px solid #b9daf8;
+}
+
+.fc-main .fc-card-grid .fc-status.completed {
+    color: #176638;
+    background: #d7f1dd;
+    border: 1px solid #b2dfbd;
+}
+
+.fc-main .fc-card-grid .fc-status.cancelled {
+    color: #a52c2c;
+    background: #ffe0df;
+    border: 1px solid #f2bdbc;
+}
+
+/* Compact details box */
+.fc-main .fc-card-grid .fc-card-details {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+
+    padding: 13px;
+    margin-bottom: 16px;
+
+    background: #e8f2e9;
+    border: 1px solid #d4e5d6;
+    border-radius: 11px;
+    box-shadow: inset 0 1px 3px rgba(37, 83, 47, 0.04);
+}
+
+.fc-main .fc-card-grid .fc-card-details p {
+    margin: 0;
+    color: #526b57;
+    font-size: 12px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.fc-main .fc-card-grid .fc-card-details strong {
+    color: #285a35;
+    font-weight: 750;
+}
+
+/* Edit / Delete buttons */
+.fc-main .fc-card-grid .fc-card-actions {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-top: auto;
+}
+
+.fc-main .fc-card-grid .fc-card-actions .fc-button {
+    flex: 1;
+    min-width: 0;
+    min-height: 36px;
+    padding: 9px 10px;
+
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+
+    background: #dcefe0;
+    color: #226337;
+    border: 1px solid #bcdcc2;
+    box-shadow: none;
+    cursor: pointer;
+
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.fc-main .fc-card-grid .fc-card-actions .fc-button:hover {
+    transform: none;
+    background: #c8e5ce;
+    color: #174c28;
+    box-shadow: none;
+}
+
+/* Delete button */
+.fc-main .fc-card-grid .fc-card-actions .fc-danger {
+    background: #ffebe9;
+    color: #b52e2e;
+    border: 1px solid #efc7c3;
+    box-shadow: none;
+}
+
+.fc-main .fc-card-grid .fc-card-actions .fc-danger:hover {
+    background: #c83e3e;
+    color: #ffffff;
+    border-color: #c83e3e;
+}
+
+/* Tablet: 2 cards per row */
+@media (max-width: 1050px) {
+    .fc-main .fc-card-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* Mobile: 1 card per row */
+@media (max-width: 620px) {
+    .fc-main .fc-page > .fc-section:last-child {
+        padding: 15px;
+    }
+
+    .fc-main .fc-card-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 14px;
+    }
+
+    .fc-main .fc-card-grid .fc-card {
+        padding: 16px;
+    }
+}
+
+/* Operation card icon buttons */
+.fc-main .fc-card-grid .fc-card-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: auto;
+}
+
+.fc-main .fc-card-grid .fc-card-actions .fc-icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 38px;
+    padding: 9px;
+
+    border-radius: 10px;
+    border: 1px solid #c8dfcc;
+    background: #e1f0e4;
+    color: #28723c;
+
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(37, 83, 47, 0.07);
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.fc-main .fc-card-grid .fc-card-actions .fc-icon-btn svg {
+    display: block;
+    width: 19px;
+    height: 19px;
+}
+
+.fc-main .fc-card-grid .fc-card-actions .fc-icon-btn:hover {
+    transform: translateY(-1px);
+    background: #cde7d2;
+}
+
+/* Edit icon on left */
+.fc-main .fc-card-grid .fc-card-actions .fc-edit-icon {
+    margin-right: auto;
+    color: #26713b;
+    background: #e1f0e4;
+    border-color: #c8dfcc;
+}
+
+/* Delete icon on right */
+.fc-main .fc-card-grid .fc-card-actions .fc-delete-icon {
+    margin-left: auto;
+    color: #b83232;
+    background: #fff0ee;
+    border-color: #f0ceca;
+}
+
+.fc-main .fc-card-grid .fc-card-actions .fc-delete-icon:hover {
+    color: #ffffff;
+    background: #c83e3e;
+    border-color: #c83e3e;
+}
+
+.fc-main .fc-card-grid .fc-card-actions .fc-icon-btn:focus-visible {
+    outline: 3px solid #9dc9a5;
+    outline-offset: 2px;
+}
+
+/* Field title and action icons */
+.fc-field-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.fc-field-title-row h3 {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+/* Finance-style outline action icons */
+.fc-row-actions {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.fc-icon-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 28px;
+    padding: 0;
+    border: none;
+    border-radius: 4px;
+    background: transparent;
+    cursor: pointer;
+    transition: color 0.18s ease, transform 0.18s ease;
+}
+
+.fc-icon-edit {
+    color: #087f68;
+}
+
+.fc-icon-delete {
+    color: #ff1717;
+}
+
+.fc-icon-action:hover {
+    transform: scale(1.12);
+}
+
+.fc-icon-edit:hover {
+    color: #045b4b;
+}
+
+.fc-icon-delete:hover {
+    color: #c90000;
+}
+
+.fc-icon-action:focus-visible {
+    outline: 2px solid #8ccfb1;
+    outline-offset: 3px;
+}
+
+.fc-icon-action svg {
+    display: block;
+}
+
+/* Crop row layout */
+.fc-crop-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.fc-crop-info {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-width: 0;
+    gap: 3px;
+    overflow-wrap: anywhere;
+}
+
+.fc-crop-actions {
+    margin-left: auto;
+    padding-left: 4px;
+}
+
+@media (max-width: 480px) {
+    .fc-field-title-row {
+        align-items: flex-start;
+    }
+
+    .fc-row-actions {
+        gap: 6px;
+    }
+
+    .fc-icon-action {
+        width: 24px;
+    }
+
+    .fc-crop-item {
+        flex-wrap: wrap;
+    }
+
+    .fc-crop-actions {
+        margin-left: auto;
+    }
+}
