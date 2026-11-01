@@ -1,4 +1,3 @@
-
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import Login from "./pages/Login";
@@ -10,6 +9,7 @@ import CropPlanning from "./pages/CropPlanning";
 import Operations from "./pages/Operations";
 import Equipment from "./pages/Equipment";
 import Finance from "./pages/Finance";
+import Notifications from "./pages/Notifications";
 
 function App() {
     return (
@@ -48,19 +48,21 @@ function App() {
                         path="/equipment"
                         element={<Equipment />}
                     />
+
                     <Route
                         path="/finance"
                         element={<Finance />}
+                    />
+
+                    <Route
+                        path="/notifications"
+                        element={<Notifications />}
                     />
                 </Route>
 
                 <Route
                     path="*"
                     element={<Navigate to="/dashboard" replace />}
-                />
-                <Route
-                    path="/equipment"
-                    element={<Equipment />}
                 />
             </Routes>
         </BrowserRouter>

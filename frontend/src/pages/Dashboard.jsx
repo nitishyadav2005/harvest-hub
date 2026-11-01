@@ -1,6 +1,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getNotifications } from "../services/notificationService";
 
 import api from "../services/api";
 import AddFieldModal from "../components/AddFieldModal";
@@ -58,6 +59,8 @@ function Dashboard() {
 
     const [savingEquipment, setSavingEquipment] = useState(false);
     const [equipmentError, setEquipmentError] = useState("");
+
+    const [notificationCount, setNotificationCount] = useState(0);
 
     const initialEquipmentForm = {
         name: "",
@@ -146,6 +149,20 @@ function Dashboard() {
     useEffect(() => {
         loadFarmData();
     }, [loadFarmData]);
+
+    useEffect(() => {
+        const loadNotificationCount = async () => {
+            try {
+                const data = await getNotifications();
+                setNotificationCount(data.length);
+            } catch (err) {
+                console.error("Notification count error:", err);
+                setNotificationCount(0);
+            }
+        };
+
+        loadNotificationCount();
+    }, [operations]);
 
     const totalFields = fields.length;
 
@@ -509,19 +526,37 @@ function Dashboard() {
             <Sidebar />
 
             <main className="hh-main">
-                <header className="hh-topbar">
-                    <span className="hh-topbar-label">
-                        Farm Management &amp; Crop Planning
-                    </span>
 
-                    <div className="hh-profile">
-                        <span className="hh-avatar">N</span>
-                        <div>
-                            <strong>Nitish Yadav</strong>
-                            <small>Farm Manager</small>
+                <header className="hh-topbar">
+    <span className="hh-topbar-label">
+        Farm Management &amp; Crop Planning
+    </span>
+
+                    <div className="hh-topbar-actions">
+                        <button
+                            type="button"
+                            className="hh-notification-bell"
+                            onClick={() => navigate("/notifications")}
+                            title="Notifications"
+                        >
+                            🔔
+                            <span className="hh-notification-count">
+    {notificationCount}
+</span>
+                        </button>
+
+                        <div className="hh-topbar-divider"></div>
+
+                        <div className="hh-profile">
+                            <span className="hh-avatar">N</span>
+                            <div>
+                                <strong>Nitish Yadav</strong>
+                                <small>Farm Manager</small>
+                            </div>
                         </div>
                     </div>
                 </header>
+
 
                 <div className="hh-content">
                     <section className="hh-welcome">
