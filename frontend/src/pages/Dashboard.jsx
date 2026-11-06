@@ -62,6 +62,11 @@ function Dashboard() {
 
     const [notificationCount, setNotificationCount] = useState(0);
 
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        navigate("/login", { replace: true });
+    };
+
     const initialEquipmentForm = {
         name: "",
         equipmentType: "Tractor",
@@ -547,12 +552,23 @@ function Dashboard() {
 
                         <div className="hh-topbar-divider"></div>
 
-                        <div className="hh-profile">
-                            <span className="hh-avatar">N</span>
-                            <div>
-                                <strong>Nitish Yadav</strong>
-                                <small>Farm Manager</small>
+                        <div className="hh-profile-actions">
+                            <div className="hh-profile">
+                                <span className="hh-avatar">N</span>
+                                <div>
+                                    <strong>Nitish Yadav</strong>
+                                    <small>Farm Manager</small>
+                                </div>
                             </div>
+
+                            <button
+                                type="button"
+                                className="hh-logout-button"
+                                onClick={handleLogout}
+                            >
+                                <span>➜]</span>
+                                Logout
+                            </button>
                         </div>
                     </div>
                 </header>
