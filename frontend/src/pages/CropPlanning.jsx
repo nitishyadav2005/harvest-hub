@@ -837,31 +837,6 @@ export default function CropPlanning() {
 
                                                 <div className="cp-actions">
 
-                                                    {/* Start Growing / Mark Harvested */}
-                                                    {getStatus(crop.status) !== "HARVESTED" && (
-                                                        <button
-                                                            type="button"
-                                                            className="cp-refresh"
-                                                            onClick={() => handleUpdateCropStatus(crop)}
-                                                            disabled={
-                                                                updatingCropId !== null ||
-                                                                saving ||
-                                                                deletingCropId !== null
-                                                            }
-                                                            title={
-                                                                getStatus(crop.status) === "PLANNED"
-                                                                    ? "Start Growing"
-                                                                    : "Mark Harvested"
-                                                            }
-                                                        >
-                                                            {updatingCropId === crop.id
-                                                                ? "Updating..."
-                                                                : getStatus(crop.status) === "PLANNED"
-                                                                    ? "Start Growing"
-                                                                    : "Mark Harvested"}
-                                                        </button>
-                                                    )}
-
                                                     {/* Edit Crop */}
                                                     <button
                                                         type="button"
@@ -888,15 +863,36 @@ export default function CropPlanning() {
                                                             deletingCropId !== null ||
                                                             updatingCropId !== null
                                                         }
-                                                        title={
-                                                            deletingCropId === crop.id
-                                                                ? "Deleting..."
-                                                                : "Delete Crop"
-                                                        }
+                                                        title="Delete Crop"
                                                         aria-label={`Delete ${crop.name}`}
                                                     >
                                                         <DeleteIcon />
                                                     </button>
+
+                                                    {/* Start Growing / Mark Harvested */}
+                                                    {getStatus(crop.status) !== "HARVESTED" && (
+                                                        <button
+                                                            type="button"
+                                                            className="cp-refresh"
+                                                            onClick={() => handleUpdateCropStatus(crop)}
+                                                            disabled={
+                                                                updatingCropId !== null ||
+                                                                saving ||
+                                                                deletingCropId !== null
+                                                            }
+                                                            title={
+                                                                getStatus(crop.status) === "PLANNED"
+                                                                    ? "Start Growing"
+                                                                    : "Mark Harvested"
+                                                            }
+                                                        >
+                                                            {updatingCropId === crop.id
+                                                                ? "Updating..."
+                                                                : getStatus(crop.status) === "PLANNED"
+                                                                    ? "Start Growing"
+                                                                    : "Mark Harvested"}
+                                                        </button>
+                                                    )}
 
                                                 </div>
 

@@ -1027,12 +1027,6 @@ function Dashboard() {
                     </p>
                     <small>— Your HarvestHub Journal</small>
                 </div>
-
-                <p className="hh-demo-note">
-                    {loading
-                        ? "Loading farm data..."
-                        : `Farm area: ${formatArea(totalFarmArea)} acres · Field area: ${formatArea(totalFieldArea)} acres`}
-                </p>
             </aside>
 
             {/* Add Field Modal */}
