@@ -99,6 +99,8 @@ export default function CropPlanning() {
     const [statusFilter, setStatusFilter] = useState("ALL");
     const [fieldFilter, setFieldFilter] = useState("ALL");
 
+    const [updatingCropId, setUpdatingCropId] = useState(null);
+
     // Load farms, fields, and crops
     const loadData = useCallback(async (showLoader = true) => {
         if (showLoader) {
@@ -336,6 +338,63 @@ export default function CropPlanning() {
             setDeletingCropId(null);
         }
     };
+
+
+    const handleUpdateCropStatus = async (crop) => {
+        const currentStatus = String(crop.status || "PLANNED")
+            .toUpperCase()
+            .replaceAll(" ", "_");
+
+        let newStatus = "";
+
+        if (currentStatus === "PLANNED") {
+            newStatus = "GROWING";
+        } else if (currentStatus === "GROWING" || currentStatus === "IN_PROGRESS") {
+            newStatus = "HARVESTED";
+        } else {
+            return;
+        }
+
+        const actionText = newStatus === "GROWING"
+            ? "start growing"
+            : "mark as harvested";
+
+        const confirmed = window.confirm(
+            `Are you sure you want to ${actionText} ${crop.name}?`
+        );
+
+        if (!confirmed) return;
+
+        try {
+            setUpdatingCropId(crop.id);
+            setError("");
+            setSuccess("");
+
+            await api.patch(`/crops/${crop.id}/status`, {
+                status: newStatus
+            });
+
+            await loadData(false);
+
+            setSuccess(
+                newStatus === "GROWING"
+                    ? `${crop.name} marked as growing successfully!`
+                    : `${crop.name} marked as harvested successfully!`
+            );
+        } catch (err) {
+            console.error("Crop status update error:", err);
+
+            setError(
+                getErrorMessage(
+                    err,
+                    "Crop status could not be updated. Please try again."
+                )
+            );
+        } finally {
+            setUpdatingCropId(null);
+        }
+    };
+
 
     // Statistics
     const plannedCount = crops.filter(
@@ -775,16 +834,43 @@ export default function CropPlanning() {
                                             </td>
 
                                             <td>
+
                                                 <div className="cp-actions">
+
+                                                    {/* Start Growing / Mark Harvested */}
+                                                    {getStatus(crop.status) !== "HARVESTED" && (
+                                                        <button
+                                                            type="button"
+                                                            className="cp-refresh"
+                                                            onClick={() => handleUpdateCropStatus(crop)}
+                                                            disabled={
+                                                                updatingCropId !== null ||
+                                                                saving ||
+                                                                deletingCropId !== null
+                                                            }
+                                                            title={
+                                                                getStatus(crop.status) === "PLANNED"
+                                                                    ? "Start Growing"
+                                                                    : "Mark Harvested"
+                                                            }
+                                                        >
+                                                            {updatingCropId === crop.id
+                                                                ? "Updating..."
+                                                                : getStatus(crop.status) === "PLANNED"
+                                                                    ? "Start Growing"
+                                                                    : "Mark Harvested"}
+                                                        </button>
+                                                    )}
+
+                                                    {/* Edit Crop */}
                                                     <button
                                                         type="button"
                                                         className="fc-icon-action fc-icon-edit"
-                                                        onClick={() =>
-                                                            handleEditCrop(crop)
-                                                        }
+                                                        onClick={() => handleEditCrop(crop)}
                                                         disabled={
                                                             saving ||
-                                                            deletingCropId !== null
+                                                            deletingCropId !== null ||
+                                                            updatingCropId !== null
                                                         }
                                                         title="Edit Crop"
                                                         aria-label={`Edit ${crop.name}`}
@@ -792,19 +878,18 @@ export default function CropPlanning() {
                                                         <EditIcon />
                                                     </button>
 
+                                                    {/* Delete Crop */}
                                                     <button
                                                         type="button"
                                                         className="fc-icon-action fc-icon-delete"
-                                                        onClick={() =>
-                                                            handleDeleteCrop(crop)
-                                                        }
+                                                        onClick={() => handleDeleteCrop(crop)}
                                                         disabled={
                                                             saving ||
-                                                            deletingCropId !== null
+                                                            deletingCropId !== null ||
+                                                            updatingCropId !== null
                                                         }
                                                         title={
-                                                            deletingCropId ===
-                                                            crop.id
+                                                            deletingCropId === crop.id
                                                                 ? "Deleting..."
                                                                 : "Delete Crop"
                                                         }
@@ -812,7 +897,9 @@ export default function CropPlanning() {
                                                     >
                                                         <DeleteIcon />
                                                     </button>
+
                                                 </div>
+
                                             </td>
                                         </tr>
                                     ))}

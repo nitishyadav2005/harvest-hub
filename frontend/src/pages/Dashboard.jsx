@@ -13,17 +13,6 @@ import "./Operations.css";
 import "./Finance.css";
 import "./Equipment.css";
 
-function SproutLogo() {
-    return (
-        <svg viewBox="0 0 64 64" aria-hidden="true">
-            <path d="M31 47V29" />
-            <path d="M31 36c-8-1-12-5-13-12 7-1 13 3 14 10" />
-            <path d="M32 31c1-8 6-13 14-14 0 8-5 14-14 14Z" />
-            <path d="M23 47h17" />
-        </svg>
-    );
-}
-
 const actions = [
     { icon: "▥", title: "Add Field", detail: "Register a new field" },
     { icon: "🌱", title: "Plan Crop", detail: "Plan crop rotation" },
@@ -102,6 +91,7 @@ function Dashboard() {
         notes: "",
     });
 
+    // Load farms, fields, crops, and operations from the backend.
     const loadFarmData = useCallback(async () => {
         try {
             setError("");
@@ -155,6 +145,7 @@ function Dashboard() {
         loadFarmData();
     }, [loadFarmData]);
 
+    // Load the notification count.
     useEffect(() => {
         const loadNotificationCount = async () => {
             try {
@@ -169,10 +160,26 @@ function Dashboard() {
         loadNotificationCount();
     }, [operations]);
 
+    // Convert field areas into acres for consistent calculations.
+    const fieldAreaInAcres = (field) => {
+        const area = Number(field.area || 0);
+        const unit = String(field.areaUnit || "acres").toLowerCase();
+
+        if (unit === "hectares") {
+            return area * 2.47105;
+        }
+
+        if (unit === "bigha") {
+            return area * 0.625;
+        }
+
+        return area;
+    };
+
     const totalFields = fields.length;
 
     const totalFieldArea = fields.reduce(
-        (total, field) => total + Number(field.area || 0),
+        (total, field) => total + fieldAreaInAcres(field),
         0
     );
 
@@ -183,11 +190,67 @@ function Dashboard() {
 
     const formatArea = (area) => Number(area.toFixed(2)).toString();
 
+    // Prepare field-wise data for the Crop Overview chart.
+    const cropChartColors = [
+        "#369753",
+        "#83c56b",
+        "#ffd33e",
+        "#b9c2c8",
+        "#4c9d85",
+        "#e6a23c",
+        "#7b91c9",
+    ];
+
+    const cropSegments = fields.map((field, index) => ({
+        id: field.id ?? index,
+        name: field.name,
+        area: fieldAreaInAcres(field),
+        originalArea: Number(field.area || 0),
+        originalUnit: field.areaUnit || "acres",
+        color: cropChartColors[index % cropChartColors.length],
+    }));
+
+    const positiveCropSegments = cropSegments.filter(
+        (segment) => segment.area > 0
+    );
+
+    const cropGradient =
+        positiveCropSegments.length > 0 && totalFieldArea > 0
+            ? `conic-gradient(${positiveCropSegments
+                .reduce((gradient, segment, index) => {
+                    const previousArea = positiveCropSegments
+                        .slice(0, index)
+                        .reduce((sum, item) => sum + item.area, 0);
+
+                    const start =
+                        (previousArea / totalFieldArea) * 100;
+
+                    const end =
+                        ((previousArea + segment.area) / totalFieldArea) *
+                        100;
+
+                    gradient.push(
+                        `${segment.color} ${start}% ${end}%`
+                    );
+
+                    return gradient;
+                }, [])
+                .join(", ")})`
+            : "#dce5df";
+
+    // Format dates as YYYY-MM-DD using local date values.
     const dateKey = (date) => {
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, "0");
         const day = String(date.getDate()).padStart(2, "0");
+
         return `${year}-${month}-${day}`;
+    };
+
+    const getDateString = (value) => {
+        if (!value) return "";
+
+        return String(value).slice(0, 10);
     };
 
     const today = new Date();
@@ -197,13 +260,15 @@ function Dashboard() {
 
     const upcomingOperations = operations
         .filter((operation) => {
-            const status = String(operation.status || "PLANNED").toUpperCase();
+            const status = String(
+                operation.status || "PLANNED"
+            ).toUpperCase();
 
             return (
                 status !== "COMPLETED" &&
                 status !== "CANCELLED" &&
                 operation.scheduledDate &&
-                operation.scheduledDate >= todayString
+                getDateString(operation.scheduledDate) >= todayString
             );
         })
         .sort((a, b) =>
@@ -223,6 +288,7 @@ function Dashboard() {
             maximumFractionDigits: 0,
         }).format(Number(amount || 0));
 
+    // Calculate scheduled and completed operations separately for each day.
     const activity = Array.from({ length: 7 }, (_, index) => {
         const day = new Date();
         day.setHours(0, 0, 0, 0);
@@ -230,26 +296,62 @@ function Dashboard() {
 
         const dateString = dateKey(day);
 
-        const dayOperations = operations.filter(
-            (operation) => operation.scheduledDate === dateString
-        );
+        const scheduledCount = operations.filter((operation) => {
+            const status = String(
+                operation.status || "PLANNED"
+            ).toUpperCase();
+
+            return (
+                status !== "COMPLETED" &&
+                status !== "CANCELLED" &&
+                getDateString(operation.scheduledDate) === dateString
+            );
+        }).length;
+
+        const completedCount = operations.filter((operation) => {
+            const status = String(
+                operation.status || ""
+            ).toUpperCase();
+
+            const completionDate = getDateString(
+                operation.completedDate || operation.scheduledDate
+            );
+
+            return (
+                status === "COMPLETED" &&
+                completionDate === dateString
+            );
+        }).length;
 
         return {
-            day: day.toLocaleDateString("en-IN", { weekday: "short" }),
-            first: dayOperations.length,
-            second: dayOperations.filter(
-                (operation) =>
-                    String(operation.status || "").toUpperCase() ===
-                    "COMPLETED"
-            ).length,
+            day: day.toLocaleDateString("en-IN", {
+                weekday: "short",
+            }),
+            first: scheduledCount,
+            second: completedCount,
         };
     });
 
-    const maxActivity = Math.max(
-        4,
+    // Calculate dynamic chart scale and Y-axis labels.
+    const maximumDailyActivity = Math.max(
+        0,
         ...activity.map((item) => Math.max(item.first, item.second))
     );
 
+    const maxActivity = Math.max(
+        4,
+        Math.ceil(maximumDailyActivity / 4) * 4
+    );
+
+    const activityGridLabels = [
+        maxActivity,
+        maxActivity * 0.75,
+        maxActivity * 0.5,
+        maxActivity * 0.25,
+        0,
+    ];
+
+    // Dashboard summary cards.
     const stats = [
         {
             title: "Total Fields",
@@ -290,6 +392,7 @@ function Dashboard() {
         },
     ];
 
+    // Open the Add Operation modal.
     const openAddOperation = () => {
         setOperationForm({
             title: "",
@@ -306,15 +409,21 @@ function Dashboard() {
 
     const closeAddOperation = () => {
         if (savingOperation) return;
+
         setShowAddOperation(false);
         setOperationError("");
     };
 
     const handleOperationChange = (event) => {
         const { name, value } = event.target;
-        setOperationForm((previous) => ({ ...previous, [name]: value }));
+
+        setOperationForm((previous) => ({
+            ...previous,
+            [name]: value,
+        }));
     };
 
+    // Save a new field operation.
     const handleOperationSubmit = async (event) => {
         event.preventDefault();
         setOperationError("");
@@ -352,11 +461,16 @@ function Dashboard() {
                 scheduledDate: operationForm.scheduledDate,
                 status: "PLANNED",
                 operationCost:
-                    operationForm.cost === "" ? 0 : Number(operationForm.cost),
+                    operationForm.cost === ""
+                        ? 0
+                        : Number(operationForm.cost),
                 notes: operationForm.notes.trim(),
             };
 
-            await api.post(`/fields/${selectedField}/operations`, payload);
+            await api.post(
+                `/fields/${selectedField}/operations`,
+                payload
+            );
 
             setShowAddOperation(false);
 
@@ -371,6 +485,7 @@ function Dashboard() {
             await loadFarmData();
         } catch (err) {
             console.error("Dashboard operation save error:", err);
+
             setOperationError(
                 err.response?.data?.message ||
                 "Operation could not be saved. Please try again."
@@ -380,17 +495,20 @@ function Dashboard() {
         }
     };
 
+    // Open the Add Transaction modal.
     const openAddTransaction = () => {
         setTransactionForm({
             ...initialTransactionForm,
             transactionDate: new Date().toISOString().slice(0, 10),
         });
+
         setTransactionError("");
         setShowAddTransaction(true);
     };
 
     const closeAddTransaction = () => {
         if (savingTransaction) return;
+
         setShowAddTransaction(false);
         setTransactionError("");
     };
@@ -405,12 +523,15 @@ function Dashboard() {
         }));
     };
 
+    // Save a new farm transaction.
     const handleTransactionSubmit = async (event) => {
         event.preventDefault();
         setTransactionError("");
 
         if (!farmId) {
-            setTransactionError("Farm details could not be loaded. Please retry.");
+            setTransactionError(
+                "Farm details could not be loaded. Please retry."
+            );
             return;
         }
 
@@ -430,6 +551,7 @@ function Dashboard() {
             await api.post("/finance/transactions", payload);
 
             setShowAddTransaction(false);
+
             setTransactionForm({
                 ...initialTransactionForm,
                 transactionDate: new Date().toISOString().slice(0, 10),
@@ -438,6 +560,7 @@ function Dashboard() {
             await loadFarmData();
         } catch (err) {
             console.error("Transaction save error:", err);
+
             setTransactionError(
                 err.response?.data?.message ||
                 "Transaction could not be saved. Please try again."
@@ -447,6 +570,7 @@ function Dashboard() {
         }
     };
 
+    // Handle dashboard quick actions.
     function handleQuickAction(title) {
         if (title === "Add Field") {
             setShowAddField(true);
@@ -463,24 +587,33 @@ function Dashboard() {
         }
     }
 
+    // Update equipment form values.
     const updateEquipmentField = (event) => {
         const { name, value } = event.target;
-        setEquipmentForm((previous) => ({ ...previous, [name]: value }));
+
+        setEquipmentForm((previous) => ({
+            ...previous,
+            [name]: value,
+        }));
     };
 
     const closeEquipmentForm = () => {
         if (savingEquipment) return;
+
         setEquipmentForm(initialEquipmentForm);
         setEquipmentError("");
         setShowAddEquipment(false);
     };
 
+    // Save new farm equipment.
     const handleAddEquipment = async (event) => {
         event.preventDefault();
         setEquipmentError("");
 
         if (!farmId) {
-            setEquipmentError("Please create a farm before adding equipment.");
+            setEquipmentError(
+                "Please create a farm before adding equipment."
+            );
             return;
         }
 
@@ -514,9 +647,11 @@ function Dashboard() {
 
             setEquipmentForm(initialEquipmentForm);
             setShowAddEquipment(false);
+
             await loadFarmData();
         } catch (err) {
             console.error("Equipment save error:", err);
+
             setEquipmentError(
                 err.response?.data?.message ||
                 "Equipment could not be added. Please try again."
@@ -531,7 +666,7 @@ function Dashboard() {
             <Sidebar />
 
             <main className="hh-main">
-
+                {/* Top Navigation */}
                 <header className="hh-topbar">
                     <span className="hh-topbar-label">
                         Farm Management &amp; Crop Planning
@@ -574,9 +709,12 @@ function Dashboard() {
                 </header>
 
                 <div className="hh-content">
+                    {/* Welcome Section */}
                     <section className="hh-welcome">
                         <div>
-                            <p className="hh-eyebrow">YOUR FARM AT A GLANCE</p>
+                            <p className="hh-eyebrow">
+                                YOUR FARM AT A GLANCE
+                            </p>
                             <h1>
                                 Welcome to HarvestHub <span>🌱</span>
                             </h1>
@@ -595,6 +733,7 @@ function Dashboard() {
                         </div>
                     </section>
 
+                    {/* Error Message */}
                     {error && (
                         <div role="alert" className="hh-error-message">
                             {error}
@@ -608,15 +747,22 @@ function Dashboard() {
                         </div>
                     )}
 
+                    {/* Dashboard Summary Cards */}
                     <section className="hh-stat-grid">
                         {stats.map((stat) => (
-                            <article className="hh-stat-card" key={stat.title}>
+                            <article
+                                className="hh-stat-card"
+                                key={stat.title}
+                            >
                                 <div className="hh-stat-top">
-                                    <span className={`hh-stat-icon ${stat.color}`}>
+                                    <span
+                                        className={`hh-stat-icon ${stat.color}`}
+                                    >
                                         {stat.icon}
                                     </span>
                                     <span className="hh-stat-arrow">↗</span>
                                 </div>
+
                                 <p>{stat.title}</p>
                                 <h2>{stat.value}</h2>
                                 <small>{stat.detail}</small>
@@ -624,6 +770,7 @@ function Dashboard() {
                         ))}
                     </section>
 
+                    {/* Crop Overview and Farm Activity */}
                     <section className="hh-middle-grid">
                         <article className="hh-panel hh-crop-panel">
                             <div className="hh-panel-heading">
@@ -631,11 +778,20 @@ function Dashboard() {
                                     <h3>Crop Overview</h3>
                                     <p>Area distribution across your fields</p>
                                 </div>
-                                <span className="hh-season-label">This Season</span>
+                                <span className="hh-season-label">
+                                    This Season
+                                </span>
                             </div>
 
                             <div className="hh-crop-content">
-                                <div className="hh-donut">
+                                <div
+                                    className="hh-donut"
+                                    style={{
+                                        background: loading
+                                            ? "#dce5df"
+                                            : cropGradient,
+                                    }}
+                                >
                                     <div className="hh-donut-hole">
                                         <strong>
                                             {loading
@@ -649,31 +805,28 @@ function Dashboard() {
                                 <div className="hh-legend">
                                     {loading ? (
                                         <p>Loading fields...</p>
-                                    ) : fields.length > 0 ? (
-                                        fields.map((field, index) => {
-                                            const colors = [
-                                                "wheat",
-                                                "potato",
-                                                "mustard",
-                                                "other",
-                                            ];
-
-                                            return (
-                                                <div
-                                                    className="hh-legend-row"
-                                                    key={field.id ?? `${field.name}-${index}`}
-                                                >
-                                                    <span
-                                                        className={`hh-dot ${colors[index % colors.length]}`}
-                                                    />
-                                                    <span>{field.name}</span>
-                                                    <small>
-                                                        {formatArea(Number(field.area || 0))}{" "}
-                                                        {field.areaUnit || "acres"}
-                                                    </small>
-                                                </div>
-                                            );
-                                        })
+                                    ) : cropSegments.length > 0 ? (
+                                        cropSegments.map((segment) => (
+                                            <div
+                                                className="hh-legend-row"
+                                                key={segment.id}
+                                            >
+                                                <span
+                                                    className="hh-dot"
+                                                    style={{
+                                                        backgroundColor:
+                                                        segment.color,
+                                                    }}
+                                                />
+                                                <span>{segment.name}</span>
+                                                <small>
+                                                    {formatArea(
+                                                        segment.originalArea
+                                                    )}{" "}
+                                                    {segment.originalUnit}
+                                                </small>
+                                            </div>
+                                        ))
                                     ) : (
                                         <p>No fields added yet.</p>
                                     )}
@@ -691,9 +844,14 @@ function Dashboard() {
 
                             <div className="hh-chart">
                                 <div className="hh-chart-grid">
-                                    {[8, 6, 4, 2, 0].map((n) => (
-                                        <div className="hh-chart-row" key={n}>
-                                            <span>{n}</span>
+                                    {activityGridLabels.map((value, index) => (
+                                        <div
+                                            className="hh-chart-row"
+                                            key={index}
+                                        >
+                                            <span>
+                                                {Number(value.toFixed(1))}
+                                            </span>
                                             <div className="hh-chart-line" />
                                         </div>
                                     ))}
@@ -701,16 +859,29 @@ function Dashboard() {
 
                                 <div className="hh-bars">
                                     {activity.map((item) => (
-                                        <div className="hh-bar-group" key={item.day}>
+                                        <div
+                                            className="hh-bar-group"
+                                            key={item.day}
+                                        >
                                             <div className="hh-bar-pair">
                                                 <span
+                                                    title={`Scheduled: ${item.first}`}
                                                     style={{
-                                                        height: `${(item.first / maxActivity) * 100}%`,
+                                                        height: `${
+                                                            (item.first /
+                                                                maxActivity) *
+                                                            100
+                                                        }%`,
                                                     }}
                                                 />
                                                 <span
+                                                    title={`Completed: ${item.second}`}
                                                     style={{
-                                                        height: `${(item.second / maxActivity) * 100}%`,
+                                                        height: `${
+                                                            (item.second /
+                                                                maxActivity) *
+                                                            100
+                                                        }%`,
                                                     }}
                                                 />
                                             </div>
@@ -721,8 +892,12 @@ function Dashboard() {
                             </div>
 
                             <div className="hh-chart-legend">
-                                <span><i /> Scheduled Operations</span>
-                                <span><i /> Completed Operations</span>
+                                <span>
+                                    <i /> Scheduled Operations
+                                </span>
+                                <span>
+                                    <i /> Completed Operations
+                                </span>
                             </div>
 
                             {!loading && operations.length === 0 && (
@@ -734,6 +909,7 @@ function Dashboard() {
                         </article>
                     </section>
 
+                    {/* Quick Actions */}
                     <section className="hh-panel hh-quick-panel">
                         <div className="hh-panel-heading">
                             <div>
@@ -748,9 +924,13 @@ function Dashboard() {
                                     type="button"
                                     className="hh-action"
                                     key={action.title}
-                                    onClick={() => handleQuickAction(action.title)}
+                                    onClick={() =>
+                                        handleQuickAction(action.title)
+                                    }
                                 >
-                                    <span className={`hh-action-icon action-${index}`}>
+                                    <span
+                                        className={`hh-action-icon action-${index}`}
+                                    >
                                         {action.icon}
                                     </span>
                                     <strong>{action.title}</strong>
@@ -762,6 +942,7 @@ function Dashboard() {
                 </div>
             </main>
 
+            {/* Right Sidebar */}
             <aside className="hh-right-column">
                 <div className="hh-promo">
                     <span>GROW WITH CONFIDENCE</span>
@@ -774,10 +955,16 @@ function Dashboard() {
                     <div className="hh-promo-plant">🌱　🌾　🚜</div>
                 </div>
 
+                {/* Upcoming Operations */}
                 <section className="hh-panel hh-upcoming">
                     <div className="hh-panel-heading">
-                        <div><h3>Upcoming Operations</h3></div>
-                        <button type="button" onClick={() => navigate("/operations")}>
+                        <div>
+                            <h3>Upcoming Operations</h3>
+                        </div>
+                        <button
+                            type="button"
+                            onClick={() => navigate("/operations")}
+                        >
                             View All
                         </button>
                     </div>
@@ -786,14 +973,19 @@ function Dashboard() {
                         <p>Loading operations...</p>
                     ) : upcomingOperations.length > 0 ? (
                         upcomingOperations.slice(0, 4).map((operation) => (
-                            <div className="hh-operation" key={operation.id}>
+                            <div
+                                className="hh-operation"
+                                key={operation.id}
+                            >
                                 <span className="hh-operation-icon">🌱</span>
+
                                 <div className="hh-operation-info">
                                     <strong>
                                         {operation.title ||
                                             operation.operationType ||
                                             "Farm Operation"}
                                     </strong>
+
                                     <small>
                                         {operation.fieldName ||
                                             operation.field?.name ||
@@ -805,9 +997,12 @@ function Dashboard() {
                                             "Farm field"}
                                     </small>
                                 </div>
+
                                 <span className="hh-operation-date">
                                     {new Date(
-                                        `${operation.scheduledDate}T00:00:00`
+                                        `${getDateString(
+                                            operation.scheduledDate
+                                        )}T00:00:00`
                                     ).toLocaleDateString("en-IN", {
                                         day: "numeric",
                                         month: "short",
@@ -827,7 +1022,8 @@ function Dashboard() {
                 <div className="hh-quote">
                     <span>“</span>
                     <p>
-                        Good planning today leads to a better harvest tomorrow.
+                        Good planning today leads to a better harvest
+                        tomorrow.
                     </p>
                     <small>— Your HarvestHub Journal</small>
                 </div>
@@ -839,6 +1035,7 @@ function Dashboard() {
                 </p>
             </aside>
 
+            {/* Add Field Modal */}
             {showAddField && (
                 <AddFieldModal
                     farms={farms}
@@ -847,6 +1044,7 @@ function Dashboard() {
                 />
             )}
 
+            {/* Add Crop Modal */}
             {showAddCrop && (
                 <AddCropModal
                     fields={fields}
@@ -878,9 +1076,12 @@ function Dashboard() {
                         <div className="hc-modal-heading">
                             <div>
                                 <p className="hc-eyebrow">FIELD MANAGEMENT</p>
-                                <h2 id="dashboard-operation-title">Add New Operation</h2>
+                                <h2 id="dashboard-operation-title">
+                                    Add New Operation
+                                </h2>
                                 <p>Schedule an activity for your field.</p>
                             </div>
+
                             <button
                                 type="button"
                                 className="hc-close"
@@ -897,25 +1098,38 @@ function Dashboard() {
                                 <label htmlFor="dashboard-operation-field">
                                     Select Field *
                                 </label>
+
                                 <select
                                     id="dashboard-operation-field"
                                     value={selectedField}
-                                    onChange={(event) => setSelectedField(event.target.value)}
+                                    onChange={(event) =>
+                                        setSelectedField(event.target.value)
+                                    }
                                     required
                                     disabled={savingOperation}
                                 >
                                     <option value="">Select a field</option>
+
                                     {fields.map((field) => (
-                                        <option key={field.id} value={String(field.id)}>
+                                        <option
+                                            key={field.id}
+                                            value={String(field.id)}
+                                        >
                                             {field.name}
                                             {field.area
-                                                ? ` (${field.area} ${field.areaUnit || "acres"})`
+                                                ? ` (${field.area} ${
+                                                    field.areaUnit || "acres"
+                                                })`
                                                 : ""}
                                         </option>
                                     ))}
                                 </select>
+
                                 {fields.length === 0 && (
-                                    <p>Please add a field in Fields &amp; Crops first.</p>
+                                    <p>
+                                        Please add a field in Fields &amp;
+                                        Crops first.
+                                    </p>
                                 )}
                             </div>
 
@@ -923,6 +1137,7 @@ function Dashboard() {
                                 <label htmlFor="dashboard-operation-name">
                                     Operation Title *
                                 </label>
+
                                 <input
                                     id="dashboard-operation-name"
                                     type="text"
@@ -940,6 +1155,7 @@ function Dashboard() {
                                 <label htmlFor="dashboard-operation-type">
                                     Operation Type *
                                 </label>
+
                                 <select
                                     id="dashboard-operation-type"
                                     name="operationType"
@@ -948,14 +1164,26 @@ function Dashboard() {
                                     required
                                     disabled={savingOperation}
                                 >
-                                    <option value="Irrigation">Irrigation</option>
+                                    <option value="Irrigation">
+                                        Irrigation
+                                    </option>
                                     <option value="Planting">Planting</option>
-                                    <option value="Fertilizing">Fertilizing</option>
-                                    <option value="Pest Control">Pest Control</option>
+                                    <option value="Fertilizing">
+                                        Fertilizing
+                                    </option>
+                                    <option value="Pest Control">
+                                        Pest Control
+                                    </option>
                                     <option value="Weeding">Weeding</option>
-                                    <option value="Harvesting">Harvesting</option>
-                                    <option value="Soil Preparation">Soil Preparation</option>
-                                    <option value="Maintenance">Maintenance</option>
+                                    <option value="Harvesting">
+                                        Harvesting
+                                    </option>
+                                    <option value="Soil Preparation">
+                                        Soil Preparation
+                                    </option>
+                                    <option value="Maintenance">
+                                        Maintenance
+                                    </option>
                                     <option value="Other">Other</option>
                                 </select>
                             </div>
@@ -964,6 +1192,7 @@ function Dashboard() {
                                 <label htmlFor="dashboard-operation-cost">
                                     Operation Cost (₹)
                                 </label>
+
                                 <input
                                     id="dashboard-operation-cost"
                                     type="number"
@@ -981,6 +1210,7 @@ function Dashboard() {
                                 <label htmlFor="dashboard-operation-date">
                                     Scheduled Date *
                                 </label>
+
                                 <input
                                     id="dashboard-operation-date"
                                     type="date"
@@ -996,6 +1226,7 @@ function Dashboard() {
                                 <label htmlFor="dashboard-operation-notes">
                                     Notes (Optional)
                                 </label>
+
                                 <textarea
                                     id="dashboard-operation-notes"
                                     name="notes"
@@ -1023,12 +1254,17 @@ function Dashboard() {
                                 >
                                     Cancel
                                 </button>
+
                                 <button
                                     type="submit"
                                     className="hc-primary"
-                                    disabled={savingOperation || fields.length === 0}
+                                    disabled={
+                                        savingOperation || fields.length === 0
+                                    }
                                 >
-                                    {savingOperation ? "Saving..." : "Save Operation"}
+                                    {savingOperation
+                                        ? "Saving..."
+                                        : "Save Operation"}
                                 </button>
                             </div>
                         </form>
@@ -1061,8 +1297,11 @@ function Dashboard() {
                                 <h2 id="dashboard-transaction-title">
                                     Add New Farm Transaction
                                 </h2>
-                                <p>Record your farm income and expenses.</p>
+                                <p>
+                                    Record your farm income and expenses.
+                                </p>
                             </div>
+
                             <button
                                 type="button"
                                 className="finance-close-btn"
@@ -1115,10 +1354,15 @@ function Dashboard() {
                                     disabled={savingTransaction}
                                 >
                                     <option value="">Select category</option>
+
                                     {transactionForm.type === "INCOME" ? (
                                         <>
-                                            <option value="Crop Sale">Crop Sale</option>
-                                            <option value="Other Income">Other Income</option>
+                                            <option value="Crop Sale">
+                                                Crop Sale
+                                            </option>
+                                            <option value="Other Income">
+                                                Other Income
+                                            </option>
                                             <option value="Government Subsidy">
                                                 Government Subsidy
                                             </option>
@@ -1126,11 +1370,19 @@ function Dashboard() {
                                     ) : (
                                         <>
                                             <option value="Seeds">Seeds</option>
-                                            <option value="Fertilizer">Fertilizer</option>
+                                            <option value="Fertilizer">
+                                                Fertilizer
+                                            </option>
                                             <option value="Labour">Labour</option>
-                                            <option value="Equipment">Equipment</option>
-                                            <option value="Irrigation">Irrigation</option>
-                                            <option value="Other Expense">Other Expense</option>
+                                            <option value="Equipment">
+                                                Equipment
+                                            </option>
+                                            <option value="Irrigation">
+                                                Irrigation
+                                            </option>
+                                            <option value="Other Expense">
+                                                Other Expense
+                                            </option>
                                         </>
                                     )}
                                 </select>
@@ -1191,6 +1443,7 @@ function Dashboard() {
                                 >
                                     Cancel
                                 </button>
+
                                 <button
                                     type="submit"
                                     className="finance-primary-btn"
@@ -1232,10 +1485,11 @@ function Dashboard() {
                                     Add New Farm Equipment
                                 </h2>
                                 <p>
-                                    Register machine specifications, maintenance
-                                    schedules, and service dates.
+                                    Register machine specifications,
+                                    maintenance schedules, and service dates.
                                 </p>
                             </div>
+
                             <button
                                 type="button"
                                 className="equipment-modal-close"
@@ -1284,11 +1538,17 @@ function Dashboard() {
                                         disabled={savingEquipment}
                                     >
                                         <option value="Tractor">Tractor</option>
-                                        <option value="Harvester">Harvester</option>
+                                        <option value="Harvester">
+                                            Harvester
+                                        </option>
                                         <option value="Plough">Plough</option>
                                         <option value="Sprayer">Sprayer</option>
-                                        <option value="Irrigation Pump">Irrigation Pump</option>
-                                        <option value="Seed Drill">Seed Drill</option>
+                                        <option value="Irrigation Pump">
+                                            Irrigation Pump
+                                        </option>
+                                        <option value="Seed Drill">
+                                            Seed Drill
+                                        </option>
                                         <option value="Other">Other</option>
                                     </select>
                                 </label>
@@ -1307,7 +1567,9 @@ function Dashboard() {
                                         <option value="MAINTENANCE">
                                             Under Maintenance
                                         </option>
-                                        <option value="INACTIVE">Inactive</option>
+                                        <option value="INACTIVE">
+                                            Inactive
+                                        </option>
                                     </select>
                                 </label>
 
@@ -1352,7 +1614,10 @@ function Dashboard() {
                                         name="nextServiceDate"
                                         value={equipmentForm.nextServiceDate}
                                         onChange={updateEquipmentField}
-                                        min={equipmentForm.lastServiceDate || undefined}
+                                        min={
+                                            equipmentForm.lastServiceDate ||
+                                            undefined
+                                        }
                                         disabled={savingEquipment}
                                     />
                                 </label>
@@ -1372,7 +1637,10 @@ function Dashboard() {
                             </div>
 
                             {equipmentError && (
-                                <p className="equipment-modal-error" role="alert">
+                                <p
+                                    className="equipment-modal-error"
+                                    role="alert"
+                                >
                                     {equipmentError}
                                 </p>
                             )}
@@ -1386,12 +1654,15 @@ function Dashboard() {
                                 >
                                     Cancel
                                 </button>
+
                                 <button
                                     type="submit"
                                     className="fc-button fc-primary"
                                     disabled={savingEquipment || !farmId}
                                 >
-                                    {savingEquipment ? "Saving..." : "Save Equipment"}
+                                    {savingEquipment
+                                        ? "Saving..."
+                                        : "Save Equipment"}
                                 </button>
                             </div>
                         </form>

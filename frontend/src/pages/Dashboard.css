@@ -398,12 +398,6 @@
     flex-shrink: 0;
     place-items: center;
     border-radius: 50%;
-    background: conic-gradient(
-            #369753 0% 37%,
-            #83c56b 37% 62%,
-            #ffd33e 62% 84%,
-            #b9c2c8 84% 100%
-    );
 }
 
 .hh-donut-hole {
@@ -525,17 +519,20 @@
     gap: 4px;
 }
 
+
 .hh-bar-pair span {
     display: block;
     width: 10px;
-    min-height: 8px;
+    min-height: 0;
     border-radius: 5px 5px 0 0;
     background: #439c5c;
+    transition: height 0.3s ease;
 }
 
 .hh-bar-pair span + span {
     background: #8acb78;
 }
+
 
 .hh-bar-group small {
     color: var(--hh-muted);

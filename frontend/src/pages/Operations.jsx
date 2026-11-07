@@ -253,6 +253,7 @@ export default function Operations() {
         }
     };
 
+
     const markAsComplete = async operation => {
         try {
             setError("");
@@ -262,6 +263,7 @@ export default function Operations() {
                 operationType: operation.operationType,
                 scheduledDate: operation.scheduledDate,
                 status: "COMPLETED",
+                operationCost: operation.operationCost ?? operation.cost ?? 0,
                 notes: operation.notes || ""
             });
 
@@ -275,6 +277,7 @@ export default function Operations() {
             );
         }
     };
+
 
     // Calculate operation counts
     const today = new Date().toLocaleDateString("en-CA");

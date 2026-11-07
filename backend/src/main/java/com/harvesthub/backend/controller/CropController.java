@@ -17,6 +17,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+import java.util.Map;
+
+
 @RestController
 @RequestMapping("/api")
 public class CropController {
@@ -131,6 +134,40 @@ public class CropController {
         // Keep existing fieldId, status and createdAt unchanged.
         return cropRepository.save(existingCrop);
     }
+
+
+    // UPDATE CROP STATUS
+    @PatchMapping("/crops/{cropId}/status")
+    public Crop updateCropStatus(
+            @PathVariable Long cropId,
+            @RequestBody Map<String, String> request,
+            Authentication authentication) {
+
+        Crop existingCrop = cropRepository.findById(cropId)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Crop not found"));
+
+        getOwnedField(existingCrop.getFieldId(), authentication);
+
+        String status = request.get("status");
+
+        if (status == null || status.isBlank()) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "Crop status is required");
+        }
+
+        status = status.trim().toUpperCase();
+
+        if (!List.of("PLANNED", "GROWING", "HARVESTED").contains(status)) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "Invalid crop status");
+        }
+
+        existingCrop.setStatus(status);
+
+        return cropRepository.save(existingCrop);
+    }
+
 
     // DELETE CROP
     @DeleteMapping("/crops/{cropId}")
