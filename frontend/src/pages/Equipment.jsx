@@ -161,7 +161,7 @@ export default function Equipment() {
             console.error("Equipment loading error:", err);
             setError(
                 err.response?.data?.message ||
-                "Equipment data load nahi hua. Please retry."
+                "Equipment data not loaded. Please retry."
             );
         } finally {
             setLoading(false);
@@ -233,7 +233,7 @@ export default function Equipment() {
         event.preventDefault();
 
         if (farms.length === 0) {
-            setError("Equipment add karne se pehle farm create karo.");
+            setError("Create a farm before adding equipment");
             setShowEquipmentForm(false);
             return;
         }
@@ -259,10 +259,10 @@ export default function Equipment() {
             await api.post(`/farms/${farms[0].id}/equipment`, payload);
 
             resetEquipmentForm();
-            setSuccess("Equipment successfully add ho gaya.");
+            setSuccess("Equipment added successfully!");
             await loadData();
         } catch (err) {
-            setError(err.response?.data?.message || "Equipment add nahi ho paya.");
+            setError(err.response?.data?.message || "Equipment not added");
         } finally {
             setSaving(false);
         }
@@ -285,12 +285,12 @@ export default function Equipment() {
             });
 
             resetMaintenanceForm();
-            setSuccess("Maintenance successfully schedule ho gayi.");
+            setSuccess("Maintenance has been successfully scheduled");
             await loadData();
         } catch (err) {
             setError(
                 err.response?.data?.message ||
-                "Maintenance schedule nahi ho payi."
+                "Maintenance schedule could not be done."
             );
         } finally {
             setSaving(false);
@@ -298,7 +298,7 @@ export default function Equipment() {
     };
 
     const completeMaintenance = async id => {
-        if (!window.confirm("Is maintenance ko completed mark karein?")) return;
+        if (!window.confirm("Are you sure you want to mark this maintenance as complete?")) return;
 
         try {
             setError("");
@@ -306,18 +306,18 @@ export default function Equipment() {
 
             await api.put(`/maintenance/${id}/complete`);
 
-            setSuccess("Maintenance completed mark ho gayi.");
+            setSuccess("Marked Completed");
             await loadData();
         } catch (err) {
             setError(
                 err.response?.data?.message ||
-                "Maintenance complete nahi ho payi."
+                "Maintenance could not be completed."
             );
         }
     };
 
     const deleteEquipment = async item => {
-        if (!window.confirm(`${item.name} ko delete karna chahte ho?`)) return;
+        if (!window.confirm(`Are you sure you want to delete ${item.name}?`)) return;
 
         try {
             setError("");
@@ -325,18 +325,18 @@ export default function Equipment() {
 
             await api.delete(`/equipment/${item.id}`);
 
-            setSuccess("Equipment delete ho gaya.");
+            setSuccess("Equipment deleted successfully.");
             await loadData();
         } catch (err) {
             setError(
                 err.response?.data?.message ||
-                "Equipment delete nahi ho paya. Iske maintenance records ho sakte hain."
+                "Equipment could not be deleted. It may have maintenance records."
             );
         }
     };
 
     const deleteMaintenance = async id => {
-        if (!window.confirm("Ye maintenance record delete karein?")) return;
+        if (!window.confirm("Are you sure you want to delete this maintenance record?")) return;
 
         try {
             setError("");
@@ -344,12 +344,12 @@ export default function Equipment() {
 
             await api.delete(`/maintenance/${id}`);
 
-            setSuccess("Maintenance record delete ho gaya.");
+            setSuccess("Maintenance record deleted successfully.");
             await loadData();
         } catch (err) {
             setError(
                 err.response?.data?.message ||
-                "Maintenance record delete nahi ho paya."
+                "Maintenance record could not be deleted."
             );
         }
     };
@@ -901,8 +901,8 @@ export default function Equipment() {
                             </div>
 
                             <span className="equipment-record-count">
-        {maintenance.length} records
-    </span>
+                                {maintenance.length} records
+                            </span>
                         </div>
 
                         {loading ? (
@@ -923,13 +923,12 @@ export default function Equipment() {
                                         record.scheduledDate < today;
 
                                     return (
-
                                         <article className="equipment-maintenance-card" key={record.id}>
                                             {/* Left: Maintenance details */}
                                             <div className="equipment-maintenance-info">
-        <span className="equipment-maintenance-icon">
-            <ServiceIcon type={record.maintenanceType} />
-        </span>
+                                                <span className="equipment-maintenance-icon">
+                                                    <ServiceIcon type={record.maintenanceType} />
+                                                </span>
 
                                                 <div className="equipment-maintenance-details">
                                                     <h3>{formatMaintenanceType(record.maintenanceType)}</h3>
@@ -965,22 +964,22 @@ export default function Equipment() {
 
                                             {/* Status */}
                                             <div className="equipment-maintenance-status">
-        <span
-            className={
-                "equipment-record-status " +
-                (record.status === "COMPLETED"
-                    ? "is-completed"
-                    : overdue
-                        ? "is-overdue"
-                        : "is-upcoming")
-            }
-        >
-            {record.status === "COMPLETED"
-                ? "COMPLETED"
-                : overdue
-                    ? "OVERDUE"
-                    : "UPCOMING"}
-        </span>
+                                                <span
+                                                    className={
+                                                        "equipment-record-status " +
+                                                        (record.status === "COMPLETED"
+                                                            ? "is-completed"
+                                                            : overdue
+                                                                ? "is-overdue"
+                                                                : "is-upcoming")
+                                                    }
+                                                >
+                                                    {record.status === "COMPLETED"
+                                                        ? "COMPLETED"
+                                                        : overdue
+                                                            ? "OVERDUE"
+                                                            : "UPCOMING"}
+                                                </span>
                                             </div>
 
                                             {/* Right: Actions */}
@@ -1004,7 +1003,6 @@ export default function Equipment() {
                                                 </button>
                                             </div>
                                         </article>
-
                                     );
                                 })}
                             </div>

@@ -30,6 +30,7 @@ export default function AddCropModal({
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState("");
 
+    // Update form values when the selected crop or fields change
     useEffect(() => {
         setFieldId(
             String(crop?.fieldId ?? initialFieldId ?? fields[0]?.id ?? "")
@@ -42,6 +43,7 @@ export default function AddCropModal({
         setError("");
     }, [crop, fields, initialFieldId]);
 
+    // Handle crop form submission
     async function handleSubmit(event) {
         event.preventDefault();
         setError("");
@@ -92,8 +94,8 @@ export default function AddCropModal({
                 err.response?.data?.error ||
                 (
                     isEditing
-                        ? "Crop update nahi hua. Please try again."
-                        : "Crop save nahi hui. Please try again."
+                        ? "Crop could not be updated. Please try again."
+                        : "Crop could not be saved. Please try again."
                 )
             );
         } finally {
@@ -119,6 +121,7 @@ export default function AddCropModal({
                 aria-modal="true"
                 aria-labelledby="hc-modal-title"
             >
+                {/* Modal Header */}
                 <div className="hc-modal-heading">
                     <div>
                         <p className="hc-eyebrow">HARVESTHUB</p>
@@ -145,6 +148,7 @@ export default function AddCropModal({
                     </button>
                 </div>
 
+                {/* Crop Form */}
                 <form onSubmit={handleSubmit}>
                     {fields.length === 0 ? (
                         <p className="hc-error">
@@ -152,6 +156,7 @@ export default function AddCropModal({
                         </p>
                     ) : (
                         <>
+                            {/* Select Field */}
                             <div className="hc-group">
                                 <label htmlFor="hc-field">
                                     Select Field *
@@ -177,6 +182,7 @@ export default function AddCropModal({
                                 </select>
                             </div>
 
+                            {/* Crop Name */}
                             <div className="hc-group">
                                 <label htmlFor="hc-name">
                                     Crop Name *
@@ -196,6 +202,7 @@ export default function AddCropModal({
                                 />
                             </div>
 
+                            {/* Crop Season */}
                             <div className="hc-group">
                                 <label htmlFor="hc-season">
                                     Season *
@@ -216,6 +223,7 @@ export default function AddCropModal({
                                 </select>
                             </div>
 
+                            {/* Crop Dates */}
                             <div className="hc-date-row">
                                 <div className="hc-group">
                                     <label htmlFor="hc-sowing">
@@ -254,12 +262,14 @@ export default function AddCropModal({
                         </>
                     )}
 
+                    {/* Error Message */}
                     {error && (
                         <p className="hc-error" role="alert">
                             {error}
                         </p>
                     )}
 
+                    {/* Modal Actions */}
                     <div className="hc-modal-actions">
                         <button
                             type="button"

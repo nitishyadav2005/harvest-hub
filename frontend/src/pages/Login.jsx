@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../services/api";
@@ -61,7 +62,6 @@ function Login() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError("");
@@ -92,7 +92,6 @@ function Login() {
         }
     };
 
-
     const handleDemo = () => {
         setEmail("farmer@example.com");
         setPassword("12345678");
@@ -102,7 +101,7 @@ function Login() {
         <main className="login-page">
             <section className="login-content">
 
-                {/* Brand */}
+                {/* Brand Section */}
                 <div className="brand-section">
                     <div className="logo-box">
                         <SproutLogo />
@@ -119,10 +118,10 @@ function Login() {
                     </div>
                 </div>
 
-                {/* Auth Card */}
+                {/* Authentication Card */}
                 <div className="auth-card">
 
-                    {/* Tabs */}
+                    {/* Authentication Tabs */}
                     <div className="auth-tabs">
                         <div className="auth-tab active">
                             <span className="tab-icon">⌁</span>
@@ -141,14 +140,14 @@ function Login() {
 
                     <form onSubmit={handleSubmit} className="login-form">
 
-                        {/* Email */}
+                        {/* Email Field */}
                         <div className="field-group">
                             <label htmlFor="email">EMAIL ADDRESS</label>
 
                             <div className="input-box">
-                <span className="input-icon">
-                  <MailIcon />
-                </span>
+                                <span className="input-icon">
+                                    <MailIcon />
+                                </span>
 
                                 <input
                                     id="email"
@@ -162,14 +161,14 @@ function Login() {
                             </div>
                         </div>
 
-                        {/* Password */}
+                        {/* Password Field */}
                         <div className="field-group">
                             <label htmlFor="password">PASSWORD</label>
 
                             <div className="input-box">
-                <span className="input-icon">
-                  <LockIcon />
-                </span>
+                                <span className="input-icon">
+                                    <LockIcon />
+                                </span>
 
                                 <input
                                     id="password"
@@ -194,24 +193,24 @@ function Login() {
                             </div>
                         </div>
 
-                        {/* Login */}
-
-                        {/* Error message */}
+                        {/* Error Message */}
                         {error && <p className="login-error">{error}</p>}
 
-                        {/* Login */}
+                        {/* Login Button */}
                         <button
                             type="submit"
                             className="login-button"
                             disabled={loading}
                         >
-                            <span>{loading ? "Signing in..." : "Login to HarvestHub"}</span>
+                            <span>
+                                {loading ? "Signing in..." : "Login to HarvestHub"}
+                            </span>
                             <span className="arrow">→</span>
                         </button>
 
                     </form>
 
-                    {/* Register link */}
+                    {/* Registration Link */}
                     <div className="signup-row">
                         <span>Don't have an account?</span>
 
@@ -222,26 +221,7 @@ function Login() {
 
                     <div className="divider" />
 
-                    {/* Demo */}
-                    <button
-                        type="button"
-                        className="demo-card"
-                        onClick={handleDemo}
-                    >
-                        <div className="demo-icon">✣</div>
 
-                        <div className="demo-info">
-                            <strong>Quick Demo: Rajesh Kumar</strong>
-
-                            <span>
-                farmer@example.com (Green Valley Farm)
-              </span>
-                        </div>
-
-                        <span className="demo-action">
-              Auto Fill
-            </span>
-                    </button>
                 </div>
 
                 {/* Footer */}

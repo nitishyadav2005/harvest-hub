@@ -79,7 +79,7 @@ export default function CropPlanning() {
     const [refreshing, setRefreshing] = useState(false);
     const [error, setError] = useState("");
 
-    // Add/Edit Crop popup
+    // Add/Edit Crop Modal
     const [showAddCropModal, setShowAddCropModal] = useState(false);
     const [cropToEdit, setCropToEdit] = useState(null);
 
@@ -99,7 +99,7 @@ export default function CropPlanning() {
     const [statusFilter, setStatusFilter] = useState("ALL");
     const [fieldFilter, setFieldFilter] = useState("ALL");
 
-    // Load farms, fields and crops
+    // Load farms, fields, and crops
     const loadData = useCallback(async (showLoader = true) => {
         if (showLoader) {
             setLoading(true);
@@ -160,7 +160,7 @@ export default function CropPlanning() {
             setError(
                 getErrorMessage(
                     err,
-                    "Crop data load nahi hua. Please retry."
+                    "Crop data could not be loaded. Please try again."
                 )
             );
         } finally {
@@ -199,7 +199,7 @@ export default function CropPlanning() {
         setSuccess("");
     };
 
-    // Open Add Crop popup
+    // Open Add Crop Modal
     const openAddForm = () => {
         setShowForm(false);
         setEditingCropId(null);
@@ -210,13 +210,13 @@ export default function CropPlanning() {
         setShowAddCropModal(true);
     };
 
-    // Close Add/Edit Crop popup
+    // Close Add/Edit Crop Modal
     const handleCloseAddCropModal = () => {
         setShowAddCropModal(false);
         setCropToEdit(null);
     };
 
-    // Open Edit Crop popup
+    // Open Edit Crop Modal
     const handleEditCrop = (crop) => {
         setShowForm(false);
         setEditingCropId(null);
@@ -290,7 +290,7 @@ export default function CropPlanning() {
             setFormError(
                 getErrorMessage(
                     err,
-                    "Crop update nahi hua. Please try again."
+                    "Crop could not be updated. Please try again."
                 )
             );
         } finally {
@@ -329,7 +329,7 @@ export default function CropPlanning() {
             setError(
                 getErrorMessage(
                     err,
-                    "Crop delete nahi hua. Please try again."
+                    "Crop could not be deleted. Please try again."
                 )
             );
         } finally {
@@ -715,7 +715,7 @@ export default function CropPlanning() {
                             <div className="cp-empty">
                                 <h3>No matching crops</h3>
                                 <p>
-                                    Search ya filters change karke try karo.
+                                    Try changing your search or filters.
                                 </p>
 
                                 <button
@@ -842,7 +842,7 @@ export default function CropPlanning() {
                 </div>
             </main>
 
-            {/* Shared Add/Edit Crop popup */}
+            {/* Shared Add/Edit Crop Modal */}
             {showAddCropModal && (
                 <AddCropModal
                     fields={fields}

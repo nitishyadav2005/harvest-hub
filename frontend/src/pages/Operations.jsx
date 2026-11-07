@@ -6,7 +6,6 @@ import "./FieldsCrops.css";
 import "../components/AddCropModal.css";
 import "./Operations.css";
 
-
 function EditIcon() {
     return (
         <svg
@@ -46,7 +45,6 @@ function DeleteIcon() {
     );
 }
 
-
 export default function Operations() {
     const [fields, setFields] = useState([]);
     const [operations, setOperations] = useState([]);
@@ -67,7 +65,7 @@ export default function Operations() {
         notes: ""
     });
 
-    // Load farms, fields and their operations
+    // Load farms, fields, and their operations
     const loadData = useCallback(async () => {
         try {
             setError("");
@@ -105,7 +103,7 @@ export default function Operations() {
 
             setError(
                 err.response?.data?.message ||
-                "Operations load nahi hue. Please retry."
+                "Operations could not be loaded. Please try again."
             );
         } finally {
             setLoading(false);
@@ -116,7 +114,7 @@ export default function Operations() {
         loadData();
     }, [loadData]);
 
-    // Reset and close modal
+    // Reset and close the modal
     const resetForm = () => {
         setForm({
             title: "",
@@ -131,7 +129,7 @@ export default function Operations() {
         setShowForm(false);
     };
 
-    // Open modal for adding an operation
+    // Open the modal for adding an operation
     const openAddForm = () => {
         setForm({
             title: "",
@@ -149,7 +147,7 @@ export default function Operations() {
         setShowForm(true);
     };
 
-    // Open modal for editing an operation
+    // Open the modal for editing an operation
     const startEdit = operation => {
         setSelectedField(String(operation.fieldId ?? ""));
 
@@ -178,7 +176,7 @@ export default function Operations() {
         }));
     };
 
-    // Save or update operation
+    // Save or update an operation
     const handleSubmit = async event => {
         event.preventDefault();
         setFormError("");
@@ -227,14 +225,14 @@ export default function Operations() {
 
             setFormError(
                 err.response?.data?.message ||
-                "Operation save nahi hua. Please try again."
+                "Operation could not be saved. Please try again."
             );
         } finally {
             setSaving(false);
         }
     };
 
-    // Delete operation
+    // Delete an operation
     const deleteOperation = async id => {
         if (!window.confirm("Are you sure you want to delete this operation?")) {
             return;
@@ -250,11 +248,10 @@ export default function Operations() {
 
             setError(
                 err.response?.data?.message ||
-                "Operation delete nahi hua. Please try again."
+                "Operation could not be deleted. Please try again."
             );
         }
     };
-
 
     const markAsComplete = async operation => {
         try {
@@ -274,13 +271,12 @@ export default function Operations() {
 
             setError(
                 err.response?.data?.message ||
-                "Operation complete mark nahi hua. Please try again."
+                "Operation could not be marked as complete. Please try again."
             );
         }
     };
 
-
-    // Counts
+    // Calculate operation counts
     const today = new Date().toLocaleDateString("en-CA");
 
     const upcomingCount = operations.filter(operation =>
@@ -477,7 +473,6 @@ export default function Operations() {
                                         />
                                     </div>
 
-
                                     {/* Operation Type */}
                                     <div className="hc-group">
                                         <label htmlFor="operation-type">
@@ -504,7 +499,7 @@ export default function Operations() {
                                         </select>
                                     </div>
 
-                                    {/* NEW: Operation Cost */}
+                                    {/* Operation Cost */}
                                     <div className="hc-group">
                                         <label htmlFor="operation-cost">
                                             Operation Cost (₹)
@@ -529,9 +524,8 @@ export default function Operations() {
                                             Scheduled Date *
                                         </label>
 
-                                        {/* Yahan tumhara existing Scheduled Date input bilkul same rahega */}
+                                        {/* Keep the existing Scheduled Date input unchanged here. */}
                                     </div>
-
 
                                     <div className="hc-group">
                                         <label htmlFor="operation-date">
@@ -666,15 +660,15 @@ export default function Operations() {
                                 </button>
                             </div>
                         ) : (
-
                             <div className="fc-card-grid">
                                 {operations.map((operation) => (
                                     <div className="fc-card operation-card" key={operation.id}>
                                         <div className="operation-card-header">
                                             <div>
-                    <span className="operation-type-label">
-                        {operation.operationType}
-                    </span>
+                                                <span className="operation-type-label">
+                                                    {operation.operationType}
+                                                </span>
+
                                                 <h3 className="operation-card-title">
                                                     {operation.title}
                                                 </h3>
@@ -687,37 +681,42 @@ export default function Operations() {
                                                         : "status-scheduled"
                                                 }`}
                                             >
-                    {operation.status === "COMPLETED"
-                        ? "Completed"
-                        : "Scheduled"}
-                </span>
+                                                {operation.status === "COMPLETED"
+                                                    ? "Completed"
+                                                    : "Scheduled"}
+                                            </span>
                                         </div>
 
                                         <div className="operation-card-details">
-
                                             <div className="operation-detail">
-                                                <span className="operation-detail-label">FIELD</span>
+                                                <span className="operation-detail-label">
+                                                    FIELD
+                                                </span>
+
                                                 <span className="operation-detail-value">
-        {operation.fieldName ||
-            operation.field?.name ||
-            fields.find(
-                (field) => String(field.id) === String(operation.fieldId)
-            )?.name ||
-            "Field"}
-    </span>
+                                                    {operation.fieldName ||
+                                                        operation.field?.name ||
+                                                        fields.find(
+                                                            field => String(field.id) === String(operation.fieldId)
+                                                        )?.name ||
+                                                        "Field"}
+                                                </span>
                                             </div>
 
-
                                             <div className="operation-detail">
-                                                <span className="operation-detail-label">DATE</span>
+                                                <span className="operation-detail-label">
+                                                    DATE
+                                                </span>
+
                                                 <span className="operation-detail-value">
-                        {operation.scheduledDate || "Not scheduled"}
-                    </span>
+                                                    {operation.scheduledDate || "Not scheduled"}
+                                                </span>
                                             </div>
                                         </div>
 
                                         <div className="operation-cost-panel">
                                             <span>Operation Cost</span>
+
                                             <strong>
                                                 ₹{Number(
                                                 operation.operationCost ?? operation.cost ?? 0
@@ -727,11 +726,13 @@ export default function Operations() {
 
                                         {operation.notes && (
                                             <div className="operation-notes">
-                                                <span className="operation-detail-label">NOTES</span>
+                                                <span className="operation-detail-label">
+                                                    NOTES
+                                                </span>
+
                                                 <p>{operation.notes}</p>
                                             </div>
                                         )}
-
 
                                         <div className="operation-actions">
                                             {operation.status === "COMPLETED" ? (
@@ -752,16 +753,16 @@ export default function Operations() {
                                                     </svg>
 
                                                     <span>
-                Logged on{" "}
+                                                        Logged on{" "}
                                                         <strong>
-                    {operation.completedAt
-                        ? new Date(operation.completedAt).toLocaleDateString(
-                            "en-CA",
-                            { timeZone: "UTC" }
-                        )
-                        : "Date not recorded"}
-                </strong>
-            </span>
+                                                            {operation.completedAt
+                                                                ? new Date(operation.completedAt).toLocaleDateString(
+                                                                    "en-CA",
+                                                                    { timeZone: "UTC" }
+                                                                )
+                                                                : "Date not recorded"}
+                                                        </strong>
+                                                    </span>
                                                 </div>
                                             ) : (
                                                 <button
@@ -783,10 +784,10 @@ export default function Operations() {
                                                         <circle cx="12" cy="12" r="9" />
                                                         <path d="m8 12 2.5 2.5L16 9" />
                                                     </svg>
+
                                                     Mark Completed
                                                 </button>
                                             )}
-
 
                                             <div className="operation-actions-right op-actions">
                                                 <button
@@ -809,13 +810,10 @@ export default function Operations() {
                                                     <DeleteIcon />
                                                 </button>
                                             </div>
-
                                         </div>
-
                                     </div>
                                 ))}
                             </div>
-
                         )}
                     </section>
                 </div>

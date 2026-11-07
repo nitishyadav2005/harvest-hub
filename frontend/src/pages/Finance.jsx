@@ -16,7 +16,7 @@ import {
 import api from "../services/api";
 import Sidebar from "../components/Sidebar";
 import "./Finance.css";
-
+import "./Dashboard.css";
 
 export default function Finance() {
     const [farmId, setFarmId] = useState(null);
@@ -62,7 +62,7 @@ export default function Finance() {
         } catch (err) {
             setError(
                 err.response?.data?.message ||
-                "Finance data load nahi ho saka."
+                "Finance data could not be loaded."
             );
         } finally {
             setLoading(false);
@@ -77,7 +77,7 @@ export default function Finance() {
 
                 if (!farms || farms.length === 0) {
                     setError(
-                        "Pehle Fields & Crops section mein farm create karo."
+                        "Please create a farm first in the Fields & Crops section."
                     );
                     setLoading(false);
                     return;
@@ -90,7 +90,7 @@ export default function Finance() {
             } catch (err) {
                 setError(
                     err.response?.data?.message ||
-                    "Farm details load nahi ho sake."
+                    "Farm details could not be loaded."
                 );
                 setLoading(false);
             }
@@ -188,7 +188,7 @@ export default function Finance() {
 
             setError(
                 err.response?.data?.message ||
-                `Transaction ${isEditing ? "update" : "save"} nahi ho saka.`
+                `Transaction ${isEditing ? "update" : "save"} failed.`
             );
         } finally {
             setSaving(false);
@@ -198,7 +198,7 @@ export default function Finance() {
     const handleDelete = async (transactionId) => {
         if (
             !window.confirm(
-                "Kya tum ye transaction delete karna chahte ho?"
+                "Are you sure you want to delete this transaction?"
             )
         ) {
             return;
@@ -215,7 +215,7 @@ export default function Finance() {
         } catch (err) {
             setError(
                 err.response?.data?.message ||
-                "Transaction delete nahi ho saka."
+                "Transaction could not be deleted."
             );
         }
     };
@@ -228,7 +228,7 @@ export default function Finance() {
         const today = new Date();
         const months = [];
 
-        // Current month aur pichhle 5 months
+        // Current month and the previous five months
         for (let i = 5; i >= 0; i--) {
             const date = new Date(
                 today.getFullYear(),
@@ -314,10 +314,10 @@ export default function Finance() {
         }).format(Number(amount) || 0);
 
     return (
-        <div className="finance-layout">
+        <div className="hh-dashboard finance-layout">
             <Sidebar />
 
-            <main className="finance-main">
+            <main className="hh-main finance-main">
                 <header className="finance-header">
                     <div>
                         <p className="finance-eyebrow">
@@ -325,7 +325,7 @@ export default function Finance() {
                         </p>
                         <h1>Finance & Expenses 💰</h1>
                         <p>
-                            Apne farm ki income, expenses aur profit track karo.
+                            Track your farm's income, expenses, and profit.
                         </p>
                     </div>
 
@@ -604,7 +604,6 @@ export default function Finance() {
                                             {formatMoney(transaction.amount)}
                                         </td>
 
-
                                         <td>
                                             <div className="finance-row-actions">
                                                 <button
@@ -657,7 +656,6 @@ export default function Finance() {
                                                 </button>
                                             </div>
                                         </td>
-
                                     </tr>
                                 ))}
                                 </tbody>
@@ -665,7 +663,6 @@ export default function Finance() {
                         </div>
                     )}
                 </section>
-
 
                 {showModal && (
                     <div
@@ -839,7 +836,6 @@ export default function Finance() {
                         </section>
                     </div>
                 )}
-
             </main>
         </div>
     );

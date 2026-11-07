@@ -22,7 +22,7 @@ export default function Notifications() {
 
         } catch (err) {
             console.error("Notifications loading error:", err);
-            setError("Notifications load nahi ho payi. Please retry.");
+            setError("Notifications could not be loaded. Please try again.");
         } finally {
             setLoading(false);
         }
@@ -162,7 +162,7 @@ export default function Notifications() {
                             </button>
                         </div>
 
-                        {/* Loading */}
+                        {/* Loading State */}
                         {loading ? (
 
                             <div className="notification-empty">
@@ -171,7 +171,7 @@ export default function Notifications() {
 
                         ) : error ? (
 
-                            /* Error */
+                            /* Error State */
                             <div className="notification-empty">
                                 <p>{error}</p>
 

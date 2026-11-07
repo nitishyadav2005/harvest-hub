@@ -95,7 +95,7 @@ export default function FieldsCrops() {
             console.error("Fields and crops error:", err);
             setError(
                 err.response?.data?.message ||
-                "Data load nahi hua. Please retry."
+                "Data could not be loaded. Please try again."
             );
         } finally {
             setLoading(false);
@@ -163,7 +163,7 @@ export default function FieldsCrops() {
 
             setError(
                 err.response?.data?.message ||
-                "Field delete nahi hua. Linked crops ya server error check karo."
+                "Field could not be deleted. Please check linked crops or server errors."
             );
         }
     }
@@ -188,7 +188,7 @@ export default function FieldsCrops() {
 
             setError(
                 err.response?.data?.message ||
-                "Crop delete nahi hui. Please try again."
+                "Crop could not be deleted. Please try again."
             );
         }
     }
@@ -332,8 +332,6 @@ export default function FieldsCrops() {
                                                 <h3>{field.name}</h3>
 
                                                 <div className="fc-row-actions">
-
-
                                                     <button
                                                         type="button"
                                                         className="fc-icon-action fc-icon-delete"

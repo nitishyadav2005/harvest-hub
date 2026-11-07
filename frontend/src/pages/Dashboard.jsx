@@ -144,7 +144,7 @@ function Dashboard() {
         } catch (err) {
             console.error("Dashboard data error:", err);
             setError(
-                "Farm data load nahi ho paya. Please retry or login again."
+                "Farm data could not be loaded. Please retry or log in again."
             );
         } finally {
             setLoading(false);
@@ -373,7 +373,7 @@ function Dashboard() {
             console.error("Dashboard operation save error:", err);
             setOperationError(
                 err.response?.data?.message ||
-                "Operation save nahi hua. Please try again."
+                "Operation could not be saved. Please try again."
             );
         } finally {
             setSavingOperation(false);
@@ -410,7 +410,7 @@ function Dashboard() {
         setTransactionError("");
 
         if (!farmId) {
-            setTransactionError("Farm details load nahi hue. Please retry.");
+            setTransactionError("Farm details could not be loaded. Please retry.");
             return;
         }
 
@@ -440,7 +440,7 @@ function Dashboard() {
             console.error("Transaction save error:", err);
             setTransactionError(
                 err.response?.data?.message ||
-                "Transaction save nahi ho saka. Please try again."
+                "Transaction could not be saved. Please try again."
             );
         } finally {
             setSavingTransaction(false);
@@ -480,7 +480,7 @@ function Dashboard() {
         setEquipmentError("");
 
         if (!farmId) {
-            setEquipmentError("Equipment add karne se pehle farm create karo.");
+            setEquipmentError("Please create a farm before adding equipment.");
             return;
         }
 
@@ -519,7 +519,7 @@ function Dashboard() {
             console.error("Equipment save error:", err);
             setEquipmentError(
                 err.response?.data?.message ||
-                "Equipment add nahi ho paya. Please try again."
+                "Equipment could not be added. Please try again."
             );
         } finally {
             setSavingEquipment(false);
@@ -533,9 +533,9 @@ function Dashboard() {
             <main className="hh-main">
 
                 <header className="hh-topbar">
-    <span className="hh-topbar-label">
-        Farm Management &amp; Crop Planning
-    </span>
+                    <span className="hh-topbar-label">
+                        Farm Management &amp; Crop Planning
+                    </span>
 
                     <div className="hh-topbar-actions">
                         <button
@@ -546,8 +546,8 @@ function Dashboard() {
                         >
                             🔔
                             <span className="hh-notification-count">
-    {notificationCount}
-</span>
+                                {notificationCount}
+                            </span>
                         </button>
 
                         <div className="hh-topbar-divider"></div>
@@ -572,7 +572,6 @@ function Dashboard() {
                         </div>
                     </div>
                 </header>
-
 
                 <div className="hh-content">
                     <section className="hh-welcome">
@@ -856,7 +855,7 @@ function Dashboard() {
                 />
             )}
 
-            {/* Add Operation popup */}
+            {/* Add Operation Modal */}
             {showAddOperation && (
                 <div
                     className="hc-modal-backdrop"
@@ -1037,7 +1036,7 @@ function Dashboard() {
                 </div>
             )}
 
-            {/* Add Transaction popup */}
+            {/* Add Transaction Modal */}
             {showAddTransaction && (
                 <div
                     className="finance-modal-overlay"
@@ -1207,7 +1206,7 @@ function Dashboard() {
                 </div>
             )}
 
-            {/* Add Equipment popup — separate from Transaction popup */}
+            {/* Add Equipment Modal */}
             {showAddEquipment && (
                 <div
                     className="equipment-modal-overlay"

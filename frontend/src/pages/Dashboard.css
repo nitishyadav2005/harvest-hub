@@ -1428,3 +1428,116 @@
         font-size: 12px;
     }
 }
+
+/* =================================
+   COMMON HARVESTHUB SIDEBAR LAYOUT
+================================= */
+
+.hh-dashboard {
+    display: grid;
+    grid-template-columns: 225px minmax(0, 1fr) 300px;
+    align-items: start;
+    gap: 22px;
+    padding: 22px;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+.hh-dashboard > .hh-sidebar {
+    width: 225px;
+    min-width: 225px;
+    min-height: calc(100vh - 44px);
+    box-sizing: border-box;
+}
+
+.hh-dashboard > .hh-main {
+    min-width: 0;
+    width: 100%;
+}
+
+/* Large screens */
+@media (min-width: 1450px) {
+    .hh-dashboard {
+        grid-template-columns: 240px minmax(0, 1fr) 310px;
+        gap: 22px;
+        padding: 22px;
+    }
+
+    .hh-dashboard > .hh-sidebar {
+        width: 225px;
+        min-width: 225px;
+    }
+}
+
+/* Tablet */
+@media (max-width: 1150px) and (min-width: 701px) {
+    .hh-dashboard {
+        grid-template-columns: 200px minmax(0, 1fr);
+        gap: 16px;
+        padding: 16px;
+    }
+
+    .hh-dashboard > .hh-sidebar {
+        width: 200px;
+        min-width: 200px;
+        min-height: calc(100vh - 32px);
+    }
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+    .hh-dashboard {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        padding: 12px;
+    }
+
+    .hh-dashboard > .hh-sidebar {
+        width: 100%;
+        min-width: 0;
+        min-height: auto;
+    }
+
+    .hh-dashboard > .hh-main {
+        width: 100%;
+    }
+}
+
+/* Consistent Sidebar Content Positioning */
+
+.hh-sidebar {
+    display: flex;
+    flex-direction: column;
+    padding: 24px 14px 18px;
+}
+
+.hh-brand {
+    flex-shrink: 0;
+    margin: 0;
+}
+
+.hh-nav {
+    display: grid;
+    flex-shrink: 0;
+    gap: 7px;
+    margin: 0;
+    padding: 0;
+}
+
+.hh-nav-item {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 45px;
+    flex-shrink: 0;
+    padding: 13px 11px;
+}
+
+.hh-sidebar-art {
+    flex: 1 1 auto;
+}
+
+.hh-sidebar-footer {
+    flex-shrink: 0;
+}

@@ -289,15 +289,6 @@
     }
 }
 
-/* Shared Dashboard sidebar layout */
-.hh-dashboard.fc-shell {
-    grid-template-columns: 225px minmax(0, 1fr);
-    align-items: start;
-    min-height: 100vh;
-    gap: 22px;
-    padding: 22px;
-}
-
 .fc-main {
     min-width: 0;
     width: 100%;
@@ -311,12 +302,6 @@
 
 /* Tablet */
 @media (max-width: 1150px) {
-    .hh-dashboard.fc-shell {
-        grid-template-columns: 200px minmax(0, 1fr);
-        gap: 16px;
-        padding: 16px;
-    }
-
     .fc-main .fc-page {
         padding: 8px;
     }
@@ -969,4 +954,65 @@
     .fc-crop-actions {
         margin-left: auto;
     }
+}
+/* Fields & Crops - Full Width Fix */
+.hh-dashboard.fc-shell {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.fc-main {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+.fc-main .fc-page {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+.fc-main .fc-summary,
+.fc-main .fc-section {
+    width: 100%;
+    max-width: none;
+    box-sizing: border-box;
+}
+
+/* Fields & Crops - Fix Right Empty Space */
+
+.hh-dashboard.fc-shell {
+    display: grid !important;
+    grid-template-columns: 225px minmax(0, 1fr) !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    box-sizing: border-box;
+}
+
+.hh-dashboard.fc-shell > .fc-main {
+    display: block;
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    box-sizing: border-box;
+}
+
+.fc-main .fc-page {
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    box-sizing: border-box;
+}
+
+.fc-main .fc-summary,
+.fc-main .fc-section,
+.fc-main .fc-grid {
+    width: 100%;
+    max-width: none;
+    box-sizing: border-box;
 }

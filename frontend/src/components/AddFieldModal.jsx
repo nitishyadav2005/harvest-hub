@@ -15,6 +15,7 @@ function AddFieldModal({ farms, onClose, onSuccess }) {
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState("");
 
+    // Handle field form submission
     async function handleSubmit(event) {
         event.preventDefault();
         setError("");
@@ -51,7 +52,7 @@ function AddFieldModal({ farms, onClose, onSuccess }) {
             console.error("Add field error:", err);
             setError(
                 err.response?.data?.message ||
-                "Field save nahi hua. Please try again."
+                "Field could not be saved. Please try again."
             );
         } finally {
             setSaving(false);
@@ -73,6 +74,7 @@ function AddFieldModal({ farms, onClose, onSuccess }) {
                 aria-modal="true"
                 aria-labelledby="hh-field-modal-title"
             >
+                {/* Modal Header */}
                 <div className="hh-modal-header">
                     <div>
                         <p className="hh-modal-eyebrow">HARVESTHUB</p>
@@ -91,6 +93,7 @@ function AddFieldModal({ farms, onClose, onSuccess }) {
                     </button>
                 </div>
 
+                {/* Field Form */}
                 <form onSubmit={handleSubmit}>
                     {farms.length > 1 && (
                         <div className="hh-form-group">
@@ -121,6 +124,7 @@ function AddFieldModal({ farms, onClose, onSuccess }) {
                         </p>
                     )}
 
+                    {/* Field Name */}
                     <div className="hh-form-group">
                         <label htmlFor="hh-field-name">Field Name *</label>
                         <input
@@ -134,6 +138,7 @@ function AddFieldModal({ farms, onClose, onSuccess }) {
                         />
                     </div>
 
+                    {/* Field Area and Unit */}
                     <div className="hh-form-row">
                         <div className="hh-form-group">
                             <label htmlFor="hh-field-area">Area *</label>
@@ -165,6 +170,7 @@ function AddFieldModal({ farms, onClose, onSuccess }) {
                         </div>
                     </div>
 
+                    {/* Soil Type */}
                     <div className="hh-form-group">
                         <label htmlFor="hh-soil-type">Soil Type</label>
                         <select
@@ -184,6 +190,7 @@ function AddFieldModal({ farms, onClose, onSuccess }) {
                         </select>
                     </div>
 
+                    {/* Irrigation Type */}
                     <div className="hh-form-group">
                         <label htmlFor="hh-irrigation-type">
                             Irrigation Type
@@ -204,12 +211,14 @@ function AddFieldModal({ farms, onClose, onSuccess }) {
                         </select>
                     </div>
 
+                    {/* Error Message */}
                     {error && (
                         <p className="hh-form-error" role="alert">
                             {error}
                         </p>
                     )}
 
+                    {/* Modal Actions */}
                     <div className="hh-modal-actions">
                         <button
                             type="button"
