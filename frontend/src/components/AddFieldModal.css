@@ -225,3 +225,27 @@
         flex: 1;
     }
 }
+
+@media (max-width: 380px) {
+    .hh-modal-backdrop {
+        padding: 8px;
+    }
+
+    .hh-field-modal {
+        padding: 18px 12px;
+        border-radius: 16px;
+    }
+
+    .hh-modal-header h2 {
+        font-size: 19px;
+    }
+
+    .hh-modal-actions {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .hh-modal-actions button {
+        width: 100%;
+    }
+}

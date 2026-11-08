@@ -1,10 +1,13 @@
 .register-content {
     width: min(100%, 760px);
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .register-card {
     width: 100%;
     max-width: 620px;
+    box-sizing: border-box;
     margin-top: 24px;
     padding: clamp(20px, 3vw, 30px);
 }

@@ -686,3 +686,14 @@
         width: 24px;
     }
 }
+
+@media (max-width: 360px) {
+    .fc-card-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 14px;
+    }
+
+    .operation-card {
+        padding: 14px 12px;
+    }
+}

@@ -797,54 +797,22 @@
     .hh-dashboard {
         display: flex;
         flex-direction: column;
-        gap: 0;
-        padding: 0;
-    }
-
-    .hh-sidebar {
-        min-height: auto;
-        padding: 16px;
-        border-right: 0;
-        border-bottom: 1px solid var(--hh-border);
-    }
-
-    .hh-brand {
-        padding: 0 0 15px;
-    }
-
-    .hh-nav {
-        display: flex;
-        gap: 8px;
-        overflow-x: auto;
-        padding-bottom: 4px;
-    }
-
-    .hh-nav-item {
-        width: auto;
-        flex-shrink: 0;
-        padding: 10px;
-    }
-
-    .hh-nav-icon {
-        width: auto;
-    }
-
-    .hh-sidebar-art,
-    .hh-sidebar-footer {
-        display: none;
+        gap: 16px;
+        padding: 12px;
     }
 
     .hh-main {
-        padding: 0 15px 20px;
+        padding: 0 0 20px;
+        width: 100%;
+        min-width: 0;
     }
 
     .hh-topbar {
-        min-height: 65px;
-        margin-bottom: 20px;
+        min-height: auto;
+        margin-bottom: 16px;
     }
 
     .hh-topbar-label {
-        max-width: 145px;
         font-size: 11px;
     }
 
@@ -878,7 +846,8 @@
     }
 
     .hh-right-column {
-        padding: 0 15px 22px;
+        padding: 0 0 22px;
+        width: 100%;
     }
 
     .hh-crop-content {
@@ -1410,9 +1379,50 @@
     font-size: 17px;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
+    .hh-topbar {
+        min-height: auto;
+        padding: 8px 0 16px;
+        margin-bottom: 18px;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .hh-topbar-actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 520px) {
+    .hh-topbar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .hh-topbar-label {
+        font-size: 11px;
+    }
+
+    .hh-topbar-actions {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+    }
+
+    .hh-topbar-divider {
+        display: none;
+    }
+
     .hh-profile-actions {
         gap: 6px;
+        display: flex;
+        align-items: center;
     }
 
     .hh-profile {
@@ -1420,9 +1430,30 @@
         gap: 6px;
     }
 
+    .hh-avatar {
+        width: 32px;
+        height: 32px;
+        font-size: 13px;
+    }
+
     .hh-logout-button {
-        padding: 9px 10px;
-        font-size: 12px;
+        padding: 8px 10px;
+        font-size: 11px;
+        white-space: nowrap;
+    }
+}
+
+@media (max-width: 360px) {
+    .hh-profile strong {
+        font-size: 11px;
+        max-width: 75px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .hh-profile small {
+        display: none;
     }
 }
 
@@ -1466,38 +1497,47 @@
     }
 }
 
-/* Tablet */
-@media (max-width: 1150px) and (min-width: 701px) {
+/* Small Laptop / Tablet (1025px - 1200px) */
+@media (max-width: 1200px) and (min-width: 1025px) {
     .hh-dashboard {
-        grid-template-columns: 200px minmax(0, 1fr);
+        grid-template-columns: 215px minmax(0, 1fr) 280px;
         gap: 16px;
         padding: 16px;
     }
 
     .hh-dashboard > .hh-sidebar {
-        width: 200px;
-        min-width: 200px;
-        min-height: calc(100vh - 32px);
+        width: 215px;
+        min-width: 215px;
     }
 }
 
-/* Mobile */
-@media (max-width: 700px) {
+/* Tablet & Mobile (<= 1024px): Off-canvas navigation drawer mode */
+@media (max-width: 1024px) {
     .hh-dashboard {
         display: flex;
         flex-direction: column;
-        gap: 16px;
-        padding: 12px;
-    }
-
-    .hh-dashboard > .hh-sidebar {
+        gap: 18px;
+        padding: 18px;
         width: 100%;
         min-width: 0;
-        min-height: auto;
+        box-sizing: border-box;
     }
 
     .hh-dashboard > .hh-main {
         width: 100%;
+        min-width: 0;
+    }
+
+    .hh-right-column {
+        width: 100%;
+        min-width: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .hh-dashboard {
+        gap: 14px;
+        padding: 12px;
     }
 }
 

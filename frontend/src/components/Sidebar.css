@@ -1,0 +1,170 @@
+/* ==========================================================================
+   HarvestHub - Responsive Sidebar & Mobile Navigation Drawer
+   ========================================================================== */
+
+/* Mobile Top Header (Hidden on Desktop) */
+.hh-mobile-header {
+    display: none;
+}
+
+.hh-sidebar-close {
+    display: none;
+}
+
+.hh-sidebar-overlay {
+    display: none;
+}
+
+/* On Mobile & Tablet (<= 1024px): Collapsible Drawer Navigation */
+@media (max-width: 1024px) {
+    .hh-mobile-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: sticky;
+        top: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: 58px;
+        padding: 0 16px;
+        background: #ffffff;
+        border-bottom: 1px solid var(--hh-border, #dcece1);
+        z-index: 950;
+        box-shadow: 0 2px 10px rgba(24, 66, 48, 0.05);
+        box-sizing: border-box;
+    }
+
+    .hh-hamburger-btn {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        width: 38px;
+        height: 38px;
+        padding: 8px 7px;
+        background: #f0f7f2;
+        border: 1px solid #d4e8da;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background-color 0.2s ease, border-color 0.2s ease;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .hh-hamburger-btn:hover,
+    .hh-hamburger-btn:focus-visible {
+        background: #e2f1e6;
+        border-color: #24684d;
+    }
+
+    .hh-hamburger-line {
+        display: block;
+        width: 100%;
+        height: 2.5px;
+        background: #24684d;
+        border-radius: 2px;
+        transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .hh-mobile-brand {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        color: #123f30;
+        font-size: 19px;
+        font-weight: 750;
+        user-select: none;
+    }
+
+    .hh-mobile-brand .hh-brand-logo {
+        width: 36px;
+        height: 36px;
+        border-radius: 11px;
+    }
+
+    .hh-mobile-brand .hh-brand-logo svg {
+        width: 22px;
+        height: 22px;
+    }
+
+    /* Fixed Off-Canvas Drawer */
+    .hh-sidebar {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        bottom: 0 !important;
+        width: 275px !important;
+        max-width: 84vw !important;
+        height: 100vh !important;
+        height: 100dvh !important;
+        min-height: 100% !important;
+        z-index: 1100 !important;
+        transform: translateX(-100%);
+        transition: transform 0.28s cubic-bezier(0.32, 0.72, 0, 1);
+        box-shadow: none;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch;
+        margin: 0 !important;
+    }
+
+    .hh-sidebar.open {
+        transform: translateX(0) !important;
+        box-shadow: 10px 0 35px rgba(18, 63, 48, 0.25) !important;
+    }
+
+    .hh-sidebar-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 8px;
+    }
+
+    .hh-sidebar-close {
+        display: grid;
+        place-items: center;
+        width: 34px;
+        height: 34px;
+        padding: 0;
+        margin-left: auto;
+        background: #edf7ef;
+        border: 1px solid #d7ecdd;
+        color: #1a5839;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .hh-sidebar-close:hover {
+        background: #e0f1e4;
+        color: #0f3d27;
+    }
+
+    .hh-sidebar-overlay {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: rgba(18, 63, 48, 0.45);
+        backdrop-filter: blur(3px);
+        -webkit-backdrop-filter: blur(3px);
+        z-index: 1050;
+        animation: hhOverlayFade 0.2s ease-out;
+    }
+
+    @keyframes hhOverlayFade {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+}
+
+/* Desktop View (>= 1025px): 100% Preserved Desktop Styles */
+@media (min-width: 1025px) {
+    .hh-sidebar-top {
+        display: contents;
+    }
+}

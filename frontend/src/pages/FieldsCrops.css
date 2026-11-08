@@ -313,22 +313,10 @@
 
 /* Mobile */
 @media (max-width: 700px) {
-    .hh-dashboard.fc-shell {
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-        padding: 12px;
-    }
-
-    .hh-dashboard.fc-shell .hh-sidebar {
-        width: 100%;
-        min-width: 0;
-    }
-
     .fc-main .fc-page {
         width: 100%;
         min-height: auto;
-        padding: 8px 2px;
+        padding: 4px 0;
     }
 
     .fc-grid {
@@ -337,6 +325,19 @@
 
     .fc-summary {
         grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 380px) {
+    .fc-header-actions {
+        flex-direction: column;
+        width: 100%;
+        gap: 8px;
+    }
+
+    .fc-header-actions .fc-button {
+        width: 100%;
+        text-align: center;
     }
 }
 
@@ -982,15 +983,40 @@
     box-sizing: border-box;
 }
 
-/* Fields & Crops - Fix Right Empty Space */
+/* Fields & Crops - Desktop and Responsive Layout */
+@media (min-width: 1025px) {
+    .hh-dashboard.fc-shell {
+        display: grid !important;
+        grid-template-columns: 225px minmax(0, 1fr) !important;
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
+        box-sizing: border-box;
+    }
+}
 
-.hh-dashboard.fc-shell {
-    display: grid !important;
-    grid-template-columns: 225px minmax(0, 1fr) !important;
-    width: 100% !important;
-    max-width: none !important;
-    margin: 0 !important;
-    box-sizing: border-box;
+@media (max-width: 1024px) {
+    .hh-dashboard.fc-shell {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 16px !important;
+        gap: 16px !important;
+        box-sizing: border-box;
+    }
+
+    .fc-main .fc-page {
+        padding: 0 !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .hh-dashboard.fc-shell {
+        padding: 12px 8px !important;
+        gap: 12px !important;
+    }
 }
 
 .hh-dashboard.fc-shell > .fc-main {

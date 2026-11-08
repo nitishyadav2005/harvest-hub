@@ -653,13 +653,19 @@ button {
     }
 
     .auth-card {
-        padding-left: 13px;
-        padding-right: 13px;
+        padding-left: 12px;
+        padding-right: 12px;
     }
 
     .auth-tab {
-        gap: 5px;
-        font-size: 12px;
+        gap: 4px;
+        font-size: 11.5px;
+        padding: 0 4px;
+    }
+
+    .login-button {
+        font-size: 13px;
+        padding: 10px;
     }
 
     .demo-info strong {

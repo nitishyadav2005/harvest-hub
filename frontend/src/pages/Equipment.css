@@ -1621,3 +1621,30 @@
         flex-wrap: wrap;
     }
 }
+
+@media (max-width: 380px) {
+    .equipment-modal-overlay,
+    .equipment-modal-backdrop {
+        padding: 8px;
+    }
+
+    .equipment-modal,
+    .equipment-service-modal {
+        padding: 16px 12px;
+        border-radius: 16px;
+    }
+
+    .equipment-modal-header h2,
+    .equipment-modal-heading h2 {
+        font-size: 19px;
+    }
+
+    .equipment-form-actions {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .equipment-form-actions button {
+        width: 100%;
+    }
+}
