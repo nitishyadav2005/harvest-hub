@@ -2,7 +2,10 @@
 package com.harvesthub.backend.service;
 
 import com.harvesthub.backend.entity.User;
+import com.harvesthub.backend.entity.Farm;
 import com.harvesthub.backend.repository.UserRepository;
+import com.harvesthub.backend.repository.FarmRepository;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,12 +16,16 @@ import java.util.Locale;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final FarmRepository farmRepository;
     private final PasswordEncoder passwordEncoder;
 
     public UserService(
             UserRepository userRepository,
+            FarmRepository farmRepository,
             PasswordEncoder passwordEncoder) {
+
         this.userRepository = userRepository;
+        this.farmRepository = farmRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -33,6 +40,7 @@ public class UserService {
                 || farmName == null || farmName.isBlank()
                 || email == null || email.isBlank()
                 || rawPassword == null || rawPassword.isBlank()) {
+
             throw new IllegalArgumentException(
                     "All fields are required."
             );
@@ -61,7 +69,20 @@ public class UserService {
                 passwordEncoder.encode(rawPassword)
         );
 
-        return userRepository.save(user);
+        // Save user first to generate user ID
+        User savedUser = userRepository.save(user);
+
+        // Automatically create farm for the registered user
+        Farm farm = new Farm();
+        farm.setUserId(savedUser.getId());
+        farm.setName(farmName.trim());
+        farm.setLocation("Not specified");
+        farm.setTotalArea(0.0);
+        farm.setAreaUnit("acres");
+
+        farmRepository.save(farm);
+
+        return savedUser;
     }
 
     public User login(String email, String rawPassword) {
@@ -78,6 +99,7 @@ public class UserService {
 
         if (!passwordEncoder.matches(
                 rawPassword, user.getPasswordHash())) {
+
             throw new IllegalArgumentException(
                     "Invalid email or password."
             );
